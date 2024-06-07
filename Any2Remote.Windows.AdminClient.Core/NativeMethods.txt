@@ -1,0 +1,9 @@
+ExtractIconEx
+RegEnumKeyEx
+RegOpenKeyEx
+RegQueryValueEx
+RegCloseKey
+MsiEnumProducts
+MsiGetProductInfo
+LoadIcon
+SystemParametersInfo

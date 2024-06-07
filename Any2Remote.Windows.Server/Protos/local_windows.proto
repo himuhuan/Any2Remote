@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+option csharp_namespace = "Any2Remote.Windows.Grpc.Services";
+
+package Local;
+
+service Local {
+	rpc GetLocalApps(LocalAppsRequest) returns (LocalAppsResponse);
+	rpc GetAssociatedStartMenuLnk(LocalApp) returns (AssociatedStartMenuLnkResponse);
+}
+
+message LocalAppsRequest {
+	bool includeSystemComponent = 1;
+}
+
+message LocalApp {
+	string id = 1;
+	string displayName = 2;
+	string uninstallString = 3;
+	string iconUrl = 4;
+	bool systemComponent = 5;
+}
+
+message LocalAppsResponse {
+	repeated LocalApp apps = 1;
+}
+
+message AssociatedStartMenuLnkResponse {
+	repeated string lnkFiles = 1;
+}

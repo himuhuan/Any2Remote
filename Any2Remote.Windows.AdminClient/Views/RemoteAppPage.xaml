@@ -1,0 +1,78 @@
+﻿<Page
+    x:Class="Any2Remote.Windows.AdminClient.Views.RemoteAppPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:models="using:Any2Remote.Windows.AdminClient.Models"
+    mc:Ignorable="d">
+    <StackPanel x:Name="ContentArea" Orientation="Vertical" Spacing="10" Padding="10">
+        <Button
+            x:Name="NavToPublishRemoteAppBtn"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            HorizontalContentAlignment="Stretch"
+            Padding="15"
+            Click="NavToPublishRemoteAppBtn_Click"
+        >
+            <Grid ColumnSpacing="20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.5*" />
+                    <ColumnDefinition Width="10*" />
+                    <ColumnDefinition Width="0.5*" />
+                </Grid.ColumnDefinitions>
+                <FontIcon FontSize="25" Glyph="&#xE836;" Foreground="{StaticResource TextFillColorPrimaryBrush}" />
+                <StackPanel Orientation="Vertical" Grid.Column="1">
+                    <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}"
+                               Text="发布 RemoteApp" />
+                    <TextBlock Style="{StaticResource BodyTextBlockStyle}"
+                               Text="立即发布 RemoteApp 到各个客户端，客户端上的 RemoteApp 列表将被立即更新。" />
+                </StackPanel>
+                <FontIcon FontSize="10" Glyph="&#xE76C;" Foreground="{StaticResource TextFillColorPrimaryBrush}" Grid.Column="2" />
+            </Grid>
+        </Button>
+        <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}"
+                   Text="已发布的 Remote App" />
+        <TextBlock Text="当前没有已发布的 Remote App, 点击上方以发布 Remote App" 
+                   Visibility="{x:Bind ViewModel.RemoteAppTipsVisibility, Mode=OneWay}" />
+        <ScrollView Height="600">
+            <ListView x:Name="RemoteAppListView"
+                  SelectionMode="None"
+                  ItemsSource="{x:Bind ViewModel.RemoteApps, Mode=OneWay}"
+                  IsItemClickEnabled="True">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="models:RemoteApplicationListModel">
+                        <Grid Padding="5" ColumnSpacing="10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="48" />
+                                <ColumnDefinition Width="9*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="48" />
+                            </Grid.RowDefinitions>
+                            <Image Source="{x:Bind AppIconImage}" Width="32" />
+                            <StackPanel Orientation="Vertical" Grid.Column="1">
+                                <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}"
+                                       Text="{x:Bind DisplayName}" />
+                                <TextBlock Style="{StaticResource BodyTextBlockStyle}"
+                                       TextWrapping="Wrap"
+                                       Text="{x:Bind Path}" />
+                            </StackPanel>
+                            <AppBarButton VerticalAlignment="Stretch" Grid.Column="2" Icon="More">
+                                <AppBarButton.Flyout>
+                                    <MenuFlyout>
+                                        <MenuFlyoutItem x:Name="RemoteAppItemEditBtn" 
+                                                    Text="编辑" Icon="Edit" Click="RemoteAppItemEditBtn_Click" />
+                                        <MenuFlyoutItem x:Name="RemoteAppItemRemoveBtn"
+                                        Text="移除" Icon="Delete" Click="RemoteAppItemRemoveBtn_Click" />
+                                    </MenuFlyout>
+                                </AppBarButton.Flyout>
+                            </AppBarButton>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </ScrollView>
+    </StackPanel>
+</Page>

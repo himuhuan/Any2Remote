@@ -1,0 +1,22 @@
+{
+  "profiles": {
+    "Any2Remote.Windows.AdminClient (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "Any2Remote.Windows.AdminClient (Unpackaged)": {
+      "commandName": "Project"
+    },
+    "Publish": {
+      "commandName": "Project",
+      "commandLineArgs": "publish"
+    },
+    "RemoteApp": {
+      "commandName": "Project",
+      "commandLineArgs": "remote-app"
+    },
+    "InstalledApp": {
+      "commandName": "Project",
+      "commandLineArgs": "installed-app"
+    }
+  }
+}

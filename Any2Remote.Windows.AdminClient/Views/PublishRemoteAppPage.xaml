@@ -1,0 +1,96 @@
+﻿<Page
+    x:Class="Any2Remote.Windows.AdminClient.Views.PublishRemoteAppPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <StackPanel x:Name="ContentArea" Spacing="10">
+        <StackPanel
+            x:Name="PublishRemoteAppDropArea"
+            AllowDrop="True"
+            DragOver="PublishRemoteAppDropArea_DragOver"
+            Drop="PublishRemoteAppDropArea_Drop"
+            Background="{StaticResource CardStrokeColorDefault}" 
+            Height="200"
+            Spacing="10"
+            Padding="30">
+            <FontIcon Glyph="&#xE71B;" FontSize="60" />
+            <TextBlock Style="{StaticResource SubheaderTextBlockStyle}" HorizontalAlignment="Center">
+                拖放快捷方式到此处以发布 RemoteApp
+            </TextBlock>
+        </StackPanel>
+        
+        <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}" 
+                   Text="或通过以下方式发布" />
+        <Button
+            x:Name="PublishInstalledAppBtn"
+            HorizontalAlignment="Stretch" 
+            VerticalAlignment="Stretch"
+            Click="PublishInstalledAppBtn_Click"
+            HorizontalContentAlignment="Stretch"
+            Padding="10">
+            <Grid ColumnSpacing="20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.5*" />
+                    <ColumnDefinition Width="10*" />
+                    <ColumnDefinition Width="0.5*" />
+                </Grid.ColumnDefinitions>
+                <FontIcon FontSize="25" Glyph="&#xE71D;" Foreground="{StaticResource TextFillColorPrimaryBrush}" />
+                <StackPanel Orientation="Vertical" Grid.Column="1">
+                    <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}" 
+                               Text="从所有已安装的程序中发布..." />
+                    <TextBlock Style="{StaticResource BodyTextBlockStyle}" 
+                               Text="从所有已安装的程序中选择您要发布的应用程序。"/>
+                </StackPanel>
+                <FontIcon FontSize="10" Glyph="&#xE76C;" Foreground="{StaticResource TextFillColorPrimaryBrush}" Grid.Column="2" />
+            </Grid>
+        </Button>
+        <Button
+            x:Name="PublishFileSystemAppBtn"
+            HorizontalAlignment="Stretch" 
+            VerticalAlignment="Stretch"
+            HorizontalContentAlignment="Stretch"
+            Click="PublishFileSystemAppBtn_OnClick"
+            Padding="10">
+            <Grid ColumnSpacing="20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.5*" />
+                    <ColumnDefinition Width="10*" />
+                    <ColumnDefinition Width="0.5*" />
+                </Grid.ColumnDefinitions>
+                <FontIcon FontSize="25" Glyph="&#xec50;" Foreground="{StaticResource TextFillColorPrimaryBrush}" />
+                <StackPanel Orientation="Vertical" Grid.Column="1">
+                    <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}" 
+                       Text="从文件管理器中选择" />
+                    <TextBlock Style="{StaticResource BodyTextBlockStyle}" 
+                       Text="通过文件管理器访问文件系统以选择您要发布的应用程序 (.exe)。" />
+                </StackPanel>
+                <FontIcon FontSize="10" Glyph="&#xE76C;" Foreground="{StaticResource TextFillColorPrimaryBrush}" Grid.Column="2" />
+            </Grid>
+        </Button>
+        <Button
+            x:Name="PublishLnkAppBtn"
+            HorizontalAlignment="Stretch" 
+            VerticalAlignment="Stretch"
+            HorizontalContentAlignment="Stretch"
+            Click="PublishLnkAppBtn_OnClick"
+            Padding="10">
+            <Grid ColumnSpacing="20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.5*" />
+                    <ColumnDefinition Width="10*" />
+                    <ColumnDefinition Width="0.5*" />
+                </Grid.ColumnDefinitions>
+                <FontIcon FontSize="25" Glyph="&#xE71B;" Foreground="{StaticResource TextFillColorPrimaryBrush}" />
+                <StackPanel Orientation="Vertical" Grid.Column="1">
+                    <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}" 
+                               Text="从文件管理器中选择..." />
+                    <TextBlock Style="{StaticResource BodyTextBlockStyle}" 
+                               Text="通过文件管理器访问文件系统以指定您要发布的应用程序的快捷方式 (.lnk)。" />
+                </StackPanel>
+                <FontIcon FontSize="10" Glyph="&#xE76C;" Foreground="{StaticResource TextFillColorPrimaryBrush}" Grid.Column="2" />
+            </Grid>
+        </Button>
+    </StackPanel>
+</Page>

@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<Page
+    x:Class="Any2Remote.Windows.AdminClient.Views.EditRemoteAppPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <ScrollView Padding="20" VerticalScrollBarVisibility="Hidden">
+        <StackPanel>
+            <!--- Loading -->
+            <StackPanel Spacing="10" x:Name="LoadingPanel">
+                <TextBlock Style="{StaticResource BaseTextBlockStyle}">
+                    Any2Remote 正在分析要发布的 Remote App, 这可能需要一点时间。
+                </TextBlock>
+                <ProgressBar IsIndeterminate="True" ShowPaused="False" ShowError="False"></ProgressBar>
+            </StackPanel>
+            <!--- End of Loading  -->
+            <StackPanel Spacing="20" x:Name="ContentPanel">
+                <RelativePanel>
+                    <TextBlock Style="{StaticResource SubheaderTextBlockStyle}">
+                        <Run Text="{x:Bind ViewModel.RemoteApplication.DisplayName, Mode=OneWay}"></Run>
+                    </TextBlock>
+                    <Image RelativePanel.AlignRightWithPanel="True"
+                           Source="{x:Bind ViewModel.RemoteApplication.AppIconImage, Mode=OneWay}" Width="48"
+                           Height="48" />
+                </RelativePanel>
+                <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}">
+                    在检查要发布的 Remote App 的各项参数后，点击 “下一步” 发布 Remote App。
+                </TextBlock>
+                <InfoBar
+                    IsOpen="True"
+                    Title="警告"
+                    Severity="Warning"
+                    Message="Any2Remote不会检查参数的合法性和安全性，改写以下参数可能使得要发布的 Remote App 启动失败或导致系统不稳定。如果你已是 Windows 端管理员，详情参见 https://www.any2remote.com/docs/windows_server/how-to-modify-remote-args 以了解如何修改 Remote App 参数。" />
+                <InfoBar
+                    x:Name="RequriedExecutableInfoBar"
+                    IsOpen="True"
+                    Title="需要手动指定"
+                    Visibility="Collapsed"
+                    Severity="Error"
+                    Message="Any2Remote 无法确定该应用程序的可执行文件路径。您需要手动指定此应用程序的可执行路径。" >
+                    <InfoBar.ActionButton>
+                        <Button x:Name="ParseExcInfoFromFileBtn" Click="ParseExcInfoFromFileBtn_OnClick">从快捷方式/可执行文件解析...</Button>
+                    </InfoBar.ActionButton>
+                </InfoBar>
+                <InfoBar
+                    x:Name="IgnoreLocalInfoTips"
+                    IsOpen="True"
+                    Title="注意"
+                    Visibility="Collapsed"
+                    Severity="Informational"
+                    Message="此应用程序无法通过 Any2Remote 服务卸载，因为 Any2Remote 无法确定它在本地 Windows 上的安装信息。" />
+                <StackPanel Spacing="10">
+                    <TextBlock> Remote App 标识符：</TextBlock>
+                    <TextBox Text="{x:Bind ViewModel.RemoteApplication.AppId, Mode=TwoWay}"></TextBox>
+                </StackPanel>
+                <StackPanel Spacing="10">
+                    <TextBlock> Remote App 名称：</TextBlock>
+                    <TextBox Text="{x:Bind ViewModel.RemoteApplication.DisplayName, Mode=TwoWay}"></TextBox>
+                </StackPanel>
+                <StackPanel Spacing="10">
+                    <TextBlock> Remote App 可执行文件路径：</TextBlock>
+                    <TextBox Text="{x:Bind ViewModel.RemoteApplication.Path, Mode=TwoWay}"></TextBox>
+                </StackPanel>
+                <StackPanel Spacing="10">
+                    <TextBlock> Remote App 执行参数：</TextBlock>
+                    <TextBox
+                        Text="{x:Bind ViewModel.RemoteApplication.CommandLine, Mode=TwoWay}"
+                        TextWrapping="Wrap" AcceptsReturn="True" IsSpellCheckEnabled="True">
+                    </TextBox>
+                </StackPanel>
+                <StackPanel Spacing="10">
+                    <TextBlock> Remote App 工作目录：</TextBlock>
+                    <TextBox Text="{x:Bind ViewModel.RemoteApplication.WorkingDirectory, Mode=TwoWay}"></TextBox>
+                </StackPanel>
+                <StackPanel Spacing="10">
+                    <TextBlock> Remote App 描述：</TextBlock>
+                    <TextBox
+                        Text="{x:Bind ViewModel.RemoteApplication.Description, Mode=TwoWay}"
+                        MinHeight="100" TextWrapping="Wrap" AcceptsReturn="True" IsSpellCheckEnabled="True">
+                    </TextBox>
+                </StackPanel>
+                <Expander
+                    IsExpanded="False"
+                    ExpandDirection="Down"
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Stretch"
+                    HorizontalContentAlignment="Stretch"
+                    Header="高级">
+                    <StackPanel Spacing="10">
+                        <TextBox Header="卸载路径" Text="{x:Bind ViewModel.RemoteApplication.UninstallString, Mode=TwoWay}"></TextBox>
+                    </StackPanel>
+                </Expander>
+                <ProgressBar IsIndeterminate="True"  x:Name="PublishProgressBar" Visibility="Collapsed" />
+                <RelativePanel>
+                    <Button
+                        x:Name="PublishRemoteAppBtn"
+                        Click="PublishRemoteAppBtn_OnClick"
+                        RelativePanel.AlignRightWithPanel="True" 
+                        Style="{StaticResource AccentButtonStyle}">
+                        发布
+                    </Button>
+                </RelativePanel>
+            </StackPanel>
+        </StackPanel>
+    </ScrollView>
+</Page>

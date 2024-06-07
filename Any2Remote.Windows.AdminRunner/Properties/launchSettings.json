@@ -1,0 +1,16 @@
+{
+  "profiles": {
+    "Any2Remote.Windows.AdminRunner": {
+      "commandName": "Project",
+      "commandLineArgs": "server start-dev F:\\Any2Remote\\Any2Remote.Windows.Server\\bin\\Release\\net6.0-windows10.0.18362.0\\publish"
+    },
+    "Any2Remote.Windows.AdminRunner 2": {
+      "commandName": "Project",
+      "commandLineArgs": "server start F:\\Any2Remote\\Any2Remote.Windows.Server\\bin\\Release\\net6.0-windows10.0.18362.0\\publish"
+    },
+    "Kill": {
+      "commandName": "Project",
+      "commandLineArgs": "server stop"
+    }
+  }
+}

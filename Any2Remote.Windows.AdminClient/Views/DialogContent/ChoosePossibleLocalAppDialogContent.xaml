@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="Any2Remote.Windows.AdminClient.Views.DialogContent.ChoosePossibleLocalAppDialogContent"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:Any2Remote.Windows.AdminClient.Models"
+    mc:Ignorable="d">
+    <StackPanel Padding="10" Spacing="10">
+        <TextBlock TextWrapping="Wrap" Style="{StaticResource BodyStrongTextBlockStyle}">
+            Any2Remote 需要您进一步确定要发布的应用程序的本地信息。
+        </TextBlock>
+        <TextBlock TextWrapping="Wrap">
+            这可能是由于该应用程序属于其它应用程序的组件，或者该应用程序软件名称与注册时名称不符导致的。
+        </TextBlock>
+        <TextBlock TextWrapping="Wrap">你可以直接忽略这些本地信息，但是则会导致 Linux 端无法正确卸载该程序。你也可以在之后的发布页中修改为正确的值。</TextBlock>
+
+        <TextBlock>
+                    找到 <Run Text="{x:Bind PossibleLocalApps.Count}" /> 个可能符合该应用程序的本地注册信息。
+        </TextBlock>
+        <ListView
+            x:Name="PossiableLocalAppList"
+            VerticalAlignment="Stretch" SelectionMode="Single"
+            SelectionChanged="PossiableLocalAppList_OnSelectionChanged"
+            ItemsSource="{x:Bind PossibleLocalApps}" IsItemClickEnabled="True">
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="models:LocalApplicationShowModel">
+                    <Grid Padding="5" ColumnSpacing="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="48" />
+                            <ColumnDefinition Width="9*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="48" />
+                        </Grid.RowDefinitions>
+                        <Image Source="{x:Bind AppIconImage}" Width="32" />
+                        <StackPanel Orientation="Vertical" Grid.Column="1">
+                            <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}"
+                                        Text="{x:Bind DisplayName}" />
+                            <TextBlock Style="{StaticResource BodyTextBlockStyle}"
+                                        TextWrapping="Wrap"
+                                        Text="{x:Bind Id}" />
+                        </StackPanel>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackPanel>
+</Page>
