@@ -44,7 +44,7 @@ namespace Any2Remote.Windows.Server.Controllers
                 {
                     await file.CopyToAsync(stream);
                 }
-                return Ok(fileName);
+                return Ok(filePath);
             }
             return NoContent();
         }

@@ -8,6 +8,7 @@ using Any2Remote.Windows.Shared.Models;
 using Google.Protobuf.WellKnownTypes;
 using Windows.Storage.Pickers;
 using static System.String;
+using FileAttributes = Windows.Storage.FileAttributes;
 
 namespace Any2Remote.Windows.AdminClient.Views;
 
@@ -71,23 +72,66 @@ public sealed partial class PublishRemoteAppPage : Page
 
         if (e.DataView.Contains(StandardDataFormats.StorageItems))
         {
-            var items = await e.DataView.GetStorageItemsAsync();
-            foreach (var item in items)
+            var item = (await e.DataView.GetStorageItemsAsync())[0];
+            string extension = Path.GetExtension(item.Path);
+            // ReSharper disable once ConvertIfStatementToSwitchStatement
+            if (extension == ".lnk")
             {
-                if (!item.Path.EndsWith(".lnk"))
+                var app = new RemoteApplication(WindowsCommon.GetApplicationInfoFromInk(item.Path)!);
+                Frame.Navigate(typeof(EditRemoteAppPage), app);
+            }
+            else if (extension == ".exe")
+            {
+                var applicationToPublish = new ExecutableApplication
                 {
-                    errorDialog.Content = new TextBlock()
+                    Path = item.Path,
+                    DisplayName = item.Name,
+                    WorkingDirectory = Path.GetDirectoryName(item.Path) ?? string.Empty
+                };
+
+                Frame.Navigate(typeof(EditRemoteAppPage), new RemoteApplication(applicationToPublish));
+            }
+            else if (item.Name == "Internet Explorer")
+            {
+                ContentDialog warningDialog = new()
+                {
+                    Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style,
+                    Title = "警告：过时的应用程序",
+                    XamlRoot = XamlRoot,
+                    Content = new TextBlock
                     {
-                        Text = "非法格式：只接收快捷方式 (.lnk) 文件",
-                    };
-                    await errorDialog.ShowAsync();
-                }
-                else
+                        TextWrapping = TextWrapping.Wrap,
+                        Text = "Internet Explorer 已不受现代 Microsoft Windows 支持。Any2Remote " +
+                               "目前已对 Internet Explorer 做出特殊处理，您可以继续发布程序，" +
+                               "但 Any2Remote 不保证在之后的 Windows 版本可用。\n\n" +
+                               "如果 Internet Explorer 无法在 Windows 上运行，" +
+                               "请使用 \"Any2Remote 工具\" -> \"Internet Explorer 支持\""
+                    },
+                    PrimaryButtonText = "是，仍然发布",
+                    SecondaryButtonText = "取消",
+                    DefaultButton = ContentDialogButton.Primary
+                };
+                var userChoose = await warningDialog.ShowAsync();
+                if (userChoose == ContentDialogResult.Primary)
                 {
-                    var app = new RemoteApplication(WindowsCommon.GetApplicationInfoFromInk(item.Path)!);
-                    Frame.Navigate(typeof(EditRemoteAppPage), app);
-                    // ViewModel.PublishRemoteApp(item.Path, _hubConnection);
+                    RemoteApplication ieApp = new()
+                    {
+                        AppId = "Internet Explorer",
+                        DisplayName = "Internet Explorer",
+                        Path = "C:\\Program Files\\Internet Explorer\\iexplore.exe",
+                        AppIconUrl = "C:\\Program Files\\Internet Explorer\\iexplore.exe",
+                        WorkingDirectory = "C:\\Program Files\\Internet Explorer"
+                    };
+                    Frame.Navigate(typeof(EditRemoteAppPage), ieApp);
                 }
+            }
+            else
+            {
+                errorDialog.Content = new TextBlock()
+                {
+                    Text = $"Any2Remote 无法分析类型为 \"{item.Attributes}\" 的文件"
+                };
+                await errorDialog.ShowAsync();
             }
         }
     }

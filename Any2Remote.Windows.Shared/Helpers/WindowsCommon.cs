@@ -10,6 +10,7 @@ using System.Runtime.InteropServices;
 using System.Drawing;
 using Any2Remote.Windows.Grpc.Services;
 using Any2Remote.Windows.Shared.Exceptions;
+using Any2Remote.Windows.Shared.Extensions;
 
 namespace Any2Remote.Windows.Shared.Helpers;
 
@@ -26,8 +27,7 @@ public static class WindowsCommon
     public static readonly string Any2RemoteAppDataFolder
         = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Any2Remote");
 
-    private static readonly string[] InstallAppRegisterKeys = new[]
-    {
+    private static readonly string[] InstallAppRegisterKeys = {
         @"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall",
         @"SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall",
     };
@@ -47,12 +47,12 @@ public static class WindowsCommon
             {
                 DisplayName = programDisplayName,
                 Path = shortcut.TargetPath,
-                CommandLine = shortcut.Arguments,
-                WorkingDirectory = shortcut.WorkingDirectory,
-                Description = shortcut.Description
+                CommandLine = shortcut.TryGetArguments() ?? string.Empty,
+                WorkingDirectory = shortcut.TryGetWorkingDirectory() ?? string.Empty,
+                Description = shortcut.TryGetDescription() ?? "由于内部调用发生了错误，Any2Remote 无法获取该程序的描述。"
             };
         }
-        catch (Exception)
+        catch (Exception exception)
         {
             return null;
         }
@@ -68,10 +68,8 @@ public static class WindowsCommon
                 string wallpaperPath = new(buffer.Buffer);
                 return wallpaperPath;
             }
-            else
-            {
-                return string.Empty;
-            }
+
+            return string.Empty;
         }
     }
 
@@ -117,28 +115,26 @@ public static class WindowsCommon
                 ArgumentList = Array.Empty<string>()
             };
         }
-        unsafe
+
+        var argv = CommandLineToArgvW(commandLine, out int pNumArgs);
+        try
         {
-            var argv = CommandLineToArgvW(commandLine, out int pNumArgs);
-            try
+            if (pNumArgs == 0) throw new Win32Exception("CommandLineToArgv ERROR");
+            string[] args = new string[pNumArgs];
+            for (var i = 0; i < args.Length; i++)
             {
-                if (pNumArgs == 0) throw new Win32Exception("CommandLineToArgv ERROR");
-                string[] args = new string[pNumArgs];
-                for (var i = 0; i < args.Length; i++)
-                {
-                    var p = Marshal.ReadIntPtr(argv, i * IntPtr.Size);
-                    args[i] = Marshal.PtrToStringUni(p)!;
-                }
-                return new ParseCommandLineResult
-                {
-                    Program = args[0],
-                    ArgumentList = args.Skip(1).ToArray()
-                };
+                var p = Marshal.ReadIntPtr(argv, i * IntPtr.Size);
+                args[i] = Marshal.PtrToStringUni(p)!;
             }
-            finally
+            return new ParseCommandLineResult
             {
-                Marshal.FreeHGlobal(argv);
-            }
+                Program = args[0],
+                ArgumentList = args.Skip(1).ToArray()
+            };
+        }
+        finally
+        {
+            Marshal.FreeHGlobal(argv);
         }
     }
 
@@ -160,7 +156,7 @@ public static class WindowsCommon
     {
         try
         {
-            return ExtractIconNative(iconFilePath, iconIndex ?? 0, 48, false);
+            return ExtractIconNative(iconFilePath, iconIndex ?? 0, 48);
         }
         catch (Exception)
         {
@@ -214,7 +210,7 @@ public static class WindowsCommon
 
         try
         {
-            Marshal.ThrowExceptionForHR((int) result);
+            Marshal.ThrowExceptionForHR(result);
         }
         catch (COMException ex)
         {
@@ -316,7 +312,7 @@ public static class WindowsCommon
 public class ParseIconUrlResult
 {
     public string IconFilePath { get; init; } = default!;
-    public int? IconIndex { get; init; } = null;
+    public int? IconIndex { get; init; }
 }
 
 public class ParseCommandLineResult
