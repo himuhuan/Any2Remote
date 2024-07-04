@@ -11,6 +11,18 @@
     "Kill": {
       "commandName": "Project",
       "commandLineArgs": "server stop"
+    },
+    "ca-cert": {
+      "commandName": "Project",
+      "commandLineArgs": "create-ca-cert"
+    },
+    "startup": {
+      "commandName": "Project",
+      "commandLineArgs": "server startup"
+    },
+    "reset": {
+      "commandName": "Project",
+      "commandLineArgs": "server reset"
     }
   }
 }

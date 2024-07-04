@@ -11,14 +11,7 @@ namespace Any2Remote.Windows.AdminClient.Models
         [JsonIgnore]
         public BitmapImage AppIconImage { get; set; }
 
-        public string UninstallString
-        {
-            get  => LocalInfo?.UninstallString ?? string.Empty;
-            set {
-                if (LocalInfo != null) 
-                    LocalInfo.UninstallString = value;
-            }
-        }
+        public string UninstallString { get; set; } = string.Empty;
 
         public RemoteApplicationListModel(ExecutableApplication app)
             : base(app)
@@ -30,6 +23,10 @@ namespace Any2Remote.Windows.AdminClient.Models
             : base(application)
         {
             AppIconImage = ModelInfoConverter.GetAppIconBitmapImage(Path);
+            if (application.LocalInfo != null)
+            {
+                UninstallString = application.LocalInfo.UninstallString;
+            }
         }
 
         public RemoteApplicationListModel(LocalApplicationShowModel localModel, ExecutableApplication application)
@@ -37,6 +34,10 @@ namespace Any2Remote.Windows.AdminClient.Models
         {
             AppIconImage = localModel.AppIconImage;
             LocalInfo = localModel.RawInfo;
+            if (LocalInfo != null)
+            {
+                UninstallString = LocalInfo.UninstallString;
+            }
             AppId = localModel.Id;
             DisplayName = localModel.DisplayName;
         }

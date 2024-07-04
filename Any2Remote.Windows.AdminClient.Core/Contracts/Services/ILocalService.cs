@@ -19,5 +19,7 @@ public interface ILocalService
 
     void StopServer();
 
-    void InitServer();
+    void StartupServer();
+    
+    void ResetApplication();
 }

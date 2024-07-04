@@ -30,7 +30,24 @@ public partial class EditRemoteAppViewModel : ObservableRecipient
         StorageFile file = await folder.CreateFileAsync("icon.png", CreationCollisionOption.ReplaceExisting);
         await ModelInfoConverter.SaveAppIcon(RemoteApplication.Path, file);
         RemoteApplication.AppIconUrl = file.Path;
+        
         var client = (Application.Current as App)!.CoreServerClient;
+
+        if (!string.IsNullOrEmpty(RemoteApplication.UninstallString))
+        {
+            if (RemoteApplication.LocalInfo == null)
+            {
+                RemoteApplication.LocalInfo = new Grpc.Services.LocalApp
+                {
+                    DisplayName = RemoteApplication.DisplayName,
+                    SystemComponent = false,
+                    IconUrl = file.Path,
+                    Id = RemoteApplication.AppId
+                };
+            }
+            RemoteApplication.LocalInfo.UninstallString = RemoteApplication.UninstallString;
+        }
+
         await client.PublishRemoteApplicationAsync(RemoteApplication);
     }
 

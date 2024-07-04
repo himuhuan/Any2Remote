@@ -5,74 +5,33 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
-    <StackPanel x:Name="ContentArea" Spacing="10">
-        <Grid ColumnSpacing="5">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="8*" />
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto" />
-            </Grid.RowDefinitions>
-            <FontIcon Glyph="&#xE704;" FontSize="80" />
-            <StackPanel Grid.Column="1" Orientation="Vertical" Spacing="3">
-                <TextBlock Style="{StaticResource SubtitleTextBlockStyle}" Text="Any2Remote 服务器" />
-                <TextBlock Style="{StaticResource BodyTextBlockStyle}">
-                    Any2Remote 在您的设备上运行中介服务器，借助远程桌面协议 (RDP) 与远程设备通信。
-                    Any2Remote 守护进程将会审核所有的远程连接请求，以确保您的设备安全。
-                </TextBlock>
-            </StackPanel>
-        </Grid>
-        <Expander Header="Any2Remote Server 属性" 
-                  HorizontalContentAlignment="Stretch"
-                  HorizontalAlignment="Stretch"
-                  Padding="0, 10">
-            <StackPanel Orientation="Vertical">
-                <Grid HorizontalAlignment="Stretch" Padding="10, 0">
-                    <Grid.ColumnDefinitions>
-                        <!-- Description -->
-                        <ColumnDefinition Width="10*" />
-                        <!-- Action -->
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Row="0"
-                           VerticalAlignment="Center" Text="开启 Any2Remote Server" />
-                    <ToggleSwitch Grid.Row="0" Grid.Column="1" />
-                </Grid>
-                <Rectangle Height="1" 
-                           Fill="{StaticResource CardBackgroundFillColorDefault}" 
-                           Margin="0,3,0,3"/>
-                <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}" 
-                           Text="Any2Remote Server 服务类型" 
-                           Padding="10, 10"/>
-                <InfoBar   
-                        IsOpen="True"  
-                        Severity="Warning"
-                        Title="开发中功能"
-                        Message="“完全”选项当前不可用, 默认将使用 “仅 Remote App” 选项。" />
-                <StackPanel Padding="20, 0">
-                    <RadioButtons SelectedIndex="1">
-                        <RadioButton>
-                            <StackPanel Orientation="Vertical">
-                                <TextBlock 
-                                    Style="{StaticResource BodyStrongTextBlockStyle}" 
-                                    Text="完全 (推荐): "/>
-                                <TextBlock
-                                    Text="使用此选项将会使得 Any2Remote 完全接管远程连接所有服务，包括身份认证" />
-                            </StackPanel>
-                        </RadioButton>
-                        <RadioButton>
-                            <StackPanel Orientation="Vertical">
-                                <TextBlock 
-                                    Style="{StaticResource BodyStrongTextBlockStyle}" 
-                                    Text="仅 Remote App"/>
-                                <TextBlock
-                                    Text="Any2Remote 只负责托管已发布的Remote App服务，包括提供对于客户端RemoteApp发布程序列表同步等。" />
-                            </StackPanel>
-                        </RadioButton>
-                    </RadioButtons>
+    <StackPanel Spacing="5">
+        <TextBlock Text="如果需要自定义 Any2Remote 服务或重置 Any2Remote，这些选项会有所帮助。"
+                   TextWrapping="Wrap" />
+        <TextBlock Text="重置选项" Style="{StaticResource BodyStrongTextBlockStyle}" />
+        <Button
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            HorizontalContentAlignment="Stretch"
+            Padding="15"
+            Click="ResetButton_OnClick">
+            <Grid ColumnSpacing="20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.5*" />
+                    <ColumnDefinition Width="10*" />
+                    <ColumnDefinition Width="0.5*" />
+                </Grid.ColumnDefinitions>
+                <FontIcon FontSize="25" Glyph="&#xEBC4;" Foreground="{StaticResource TextFillColorPrimaryBrush}" />
+                <StackPanel Orientation="Vertical" Grid.Column="1">
+                    <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}"
+                               Text="立刻重置 Any2Remote" />
+                    <TextBlock Style="{StaticResource BodyTextBlockStyle}"
+                               Text="删除所有文件，终止所有服务。" />
                 </StackPanel>
-            </StackPanel>
-        </Expander>
+                <FontIcon FontSize="10" Glyph="&#xE76C;" Foreground="{StaticResource TextFillColorPrimaryBrush}"
+                          Grid.Column="2" />
+            </Grid>
+        </Button>
     </StackPanel>
+
 </Page>

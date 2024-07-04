@@ -18,12 +18,12 @@ public sealed partial class MainPage : Page
         InitializeComponent();
     }
 
-    private void NavToServerPageBtn_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+    private void NavToServerPageBtn_Click(object sender, RoutedEventArgs e)
     {
         Frame.Navigate(typeof(ServerPage));
     }
 
-    private async void ServerActionButton_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+    private async void ServerActionButton_Click(object sender, RoutedEventArgs e)
     {
         if (ViewModel.Status == ServerStatus.Disconnected)
         {

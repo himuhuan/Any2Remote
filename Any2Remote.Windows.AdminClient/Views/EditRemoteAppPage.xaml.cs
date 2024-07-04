@@ -8,8 +8,8 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 using Windows.Storage.Pickers;
-using ABI.Microsoft.UI.Windowing;
 using static System.String;
+using Microsoft.UI.Dispatching;
 
 namespace Any2Remote.Windows.AdminClient.Views;
 
@@ -97,13 +97,23 @@ public sealed partial class EditRemoteAppPage : Page
                             IgnoreLocalInfoTips.Visibility = Visibility.Visible;
                             break;
                     }
-
-                    LoadingPanel.Visibility = Visibility.Collapsed;
-                    ContentPanel.Visibility = Visibility.Visible;
                 }
 
                 DispatcherQueue.TryEnqueue(UiTask);
             }
+            else
+            {
+                DispatcherQueue.TryEnqueue(DispatcherQueuePriority.High, () =>
+                {
+                    ViewModel.RemoteApplication = new RemoteApplicationListModel(applicationToEdit);
+                });
+            }
+
+            DispatcherQueue.TryEnqueue(DispatcherQueuePriority.High, () =>
+            {
+                LoadingPanel.Visibility = Visibility.Collapsed;
+                ContentPanel.Visibility = Visibility.Visible;
+            });
         });
     }
 

@@ -1,4 +1,5 @@
-﻿using Any2Remote.Windows.AdminClient.Models;
+﻿using Any2Remote.Windows.AdminClient.Helpers;
+using Any2Remote.Windows.AdminClient.Models;
 using Any2Remote.Windows.AdminClient.ViewModels;
 using Microsoft.AspNetCore.SignalR.Client;
 using Microsoft.UI.Xaml;
@@ -20,7 +21,7 @@ public sealed partial class RemoteAppPage : Page
     private async void InitializeSignalRAsync()
     {
         _hubConnection = new HubConnectionBuilder()
-            .WithUrl("https://localhost:7132/remotehub")
+            .WithUrl(CoreServerClient.ServerRemoteHub)
             .Build();
 
         // auto reconnect

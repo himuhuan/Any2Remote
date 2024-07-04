@@ -3,6 +3,7 @@ using Any2Remote.Windows.AdminClient.Core.Exceptions;
 using Any2Remote.Windows.Grpc.Services;
 using Microsoft.Win32;
 using System.Diagnostics;
+using Any2Remote.Windows.Shared.Helpers;
 using Any2Remote.Windows.Shared.Models;
 
 namespace Any2Remote.Windows.AdminClient.Core.Services;
@@ -51,25 +52,32 @@ public class LocalWindowsService : ILocalService
             return ServerStatus.NotInitialized;
         }
 
-        Process[] processes = Process.GetProcessesByName("Any2Remote.Windows.Server");
-        if (processes.Length == 0)
+        // check CA certificate
+        string certificatePath = Path.Combine(WindowsCommon.Any2RemoteAppDataFolder, "certificate.json");
+        if (!File.Exists(certificatePath))
         {
-            return ServerStatus.Disconnected;
+            return ServerStatus.NotInitialized;
         }
 
-        return ServerStatus.Connected;
+        Process[] processes = Process.GetProcessesByName("Any2Remote.Windows.Server");
+        return processes.Length == 0 ? ServerStatus.Disconnected : ServerStatus.Connected;
     }
 
-    public void InitServer()
+    public void StartupServer()
     {
-        LanuchAdminRunner("server", "init");
+        LaunchAdminRunner("server", "startup");
+    }
+
+    public void ResetApplication()
+    {
+        LaunchAdminRunner("server", "reset");
     }
 
     public void StartDevServer()
     {
         string serverRootPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Assets\Any2RemoteServer");
         string serverRoot = $"\"{serverRootPath}\"";
-        LanuchAdminRunner("server", "start-dev", serverRoot);
+        LaunchAdminRunner("server", "start-dev", serverRoot);
     }
 
     public void StartServer()
@@ -79,15 +87,15 @@ public class LocalWindowsService : ILocalService
         // Command Line in Windows does not recognize paths with spaces without quotes
         // If user installed the app in a path with spaces, the execution will fail.
         string serverRoot = $"\"{serverRootPath}\"";
-        LanuchAdminRunner("server", "start", serverRoot);
+        LaunchAdminRunner("server", "start", serverRoot);
     }
 
     public void StopServer()
     {
-        LanuchAdminRunner("server", "stop");
+        LaunchAdminRunner("server", "stop");
     }
 
-    private static void LanuchAdminRunner(params string[] args)
+    private static void LaunchAdminRunner(params string[] args)
     {
         string runnerPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
             @"Assets\AdminRunner\Any2Remote.Windows.AdminRunner.exe");
@@ -106,7 +114,7 @@ public class LocalWindowsService : ILocalService
         }
         catch (Exception ex)
         {
-            throw new Any2RemoteException("Unable to lanuch AdminRunner", ex);
+            throw new Any2RemoteException("Unable to launch AdminRunner", ex);
         }
     }
 }

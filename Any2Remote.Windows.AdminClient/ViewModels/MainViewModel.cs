@@ -92,8 +92,9 @@ public partial class MainViewModel : ObservableRecipient
                     StartServer();
                 break;
             case ServerStatus.NotInitialized:
-                InitServer();
+                StartupServer();
                 break;
+            // ReSharper disable once RedundantEmptySwitchSection
             default:
                 break;
         }
@@ -132,10 +133,10 @@ public partial class MainViewModel : ObservableRecipient
         RunningTask = false;
     }
 
-    private void InitServer()
+    private void StartupServer()
     {
         RunningTask = true;
-        _localService.InitServer();
+        _localService.StartupServer();
         StartServer();
     }
 }

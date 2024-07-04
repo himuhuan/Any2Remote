@@ -1,4 +1,5 @@
-﻿using Any2Remote.Windows.Server.Services.Contracts;
+﻿using Any2Remote.Windows.Grpc.Services;
+using Any2Remote.Windows.Server.Services.Contracts;
 using Any2Remote.Windows.Shared.Exceptions;
 using Any2Remote.Windows.Shared.Models;
 using Microsoft.Win32;
@@ -32,7 +33,6 @@ namespace Any2Remote.Windows.Server.Services
                     ?? string.Empty;
                 string appIconUrl = appKey.GetValue("AppIconUrl") as string
                     ?? string.Empty;
-                string? uninstallString = appKey.GetValue("uninstallString") as string;
                 RemoteApplication application = new()
                 {
                     AppId = appId,
@@ -43,9 +43,22 @@ namespace Any2Remote.Windows.Server.Services
                     Description = description,
                     // Only server can know the actual icon url in file system
                     // Client should get the icon from server via api
-                    AppIconUrl = (overrideUrl) ? $"api/remoteapps/{appId}/icon" : appIconUrl
+                    AppIconUrl = overrideUrl ? $"api/remoteapps/{appId}/icon" : appIconUrl
                 };
-                
+
+                if (appKey.GetValue("UninstallString") is string uninstallString)
+                {
+                    bool isSystemComponent = appKey.GetValue("SystemComponent") as bool? ?? false;
+                    application.LocalInfo = new LocalApp
+                    {
+                        Id = appId,
+                        UninstallString = uninstallString,
+                        DisplayName = name,
+                        IconUrl = appIconUrl,
+                        SystemComponent = isSystemComponent
+                    };
+                }
+
                 remoteApps.Add(appId, application);
             }
             return remoteApps;
@@ -73,6 +86,11 @@ namespace Any2Remote.Windows.Server.Services
                 appRegKey.SetValue("CommandLine", application.CommandLine);
                 appRegKey.SetValue("Description", application.Description);
                 appRegKey.SetValue("AppIconUrl", application.AppIconUrl);
+                if (application.LocalInfo != null && !string.IsNullOrEmpty(application.LocalInfo.UninstallString))
+                {
+                    appRegKey.SetValue("UninstallString", application.LocalInfo.UninstallString);
+                    appRegKey.SetValue("SystemComponent", application.LocalInfo.SystemComponent ? 0 : 1);
+                }
                 appRegKey.Close();
             }
             catch (Exception e)

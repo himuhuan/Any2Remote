@@ -12,7 +12,6 @@ using Any2Remote.Windows.Grpc.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
 
 namespace Any2Remote.Windows.AdminClient;
 
@@ -70,7 +69,7 @@ public partial class App : Application
             // Any2Remote Services
             services.AddGrpcClient<Local.LocalClient>(o =>
             {
-                o.Address = new Uri("https://localhost:7133");
+                o.Address = new Uri("https://any2remote.local:7133");
             });
             services.AddSingleton<IFileService, FileService>();
             services.AddSingleton<ILocalService, LocalWindowsService>();

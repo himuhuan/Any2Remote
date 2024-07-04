@@ -41,6 +41,10 @@ namespace Any2Remote.Windows.AdminRunner
             {
                 services.AddSingleton<IRunnerActionService, ServerActionService>();
             }
+            else if (args[0] == "create-ca-cert")
+            {
+                services.AddSingleton<IRunnerActionService, CreateCertificateService>();
+            }
             else
             {
                 string argList = string.Join(' ', args);
