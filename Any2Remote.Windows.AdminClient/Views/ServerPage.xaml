@@ -5,9 +5,160 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
-    <StackPanel Spacing="5">
+    <StackPanel Spacing="10">
         <TextBlock Text="如果需要自定义 Any2Remote 服务或重置 Any2Remote，这些选项会有所帮助。"
                    TextWrapping="Wrap" />
+        <InfoBar
+            IsOpen="True"
+            Title="警告"
+            Severity="Warning"
+            Message="以下功能通常需要管理员视本地环境与需求进行配置，启用部分功能可能导致系统不稳定或被防病毒软件拦截。" />
+        <TextBlock Text="Any2Remote 服务" Style="{StaticResource BodyStrongTextBlockStyle}" />
+        <Expander
+            Background="{StaticResource CardBackgroundFillColorDefaultBrush}"
+            IsExpanded="True"
+            ExpandDirection="Down"
+            VerticalAlignment="Top"
+            HorizontalAlignment="Stretch"
+            HorizontalContentAlignment="Stretch"
+            Header="Any2Remote 服务状态">
+            <StackPanel Spacing="10">
+                <Grid ColumnDefinitions="3*, *">
+                    <TextBlock Grid.Column="0" Style="{StaticResource BodyTextBlockStyle}" Text="服务状态：" />
+                    <TextBlock Grid.Column="1" Style="{StaticResource BodyTextBlockStyle}"
+                               Text="{x:Bind ViewModel.ServiceStatusText, Mode=OneWay}" />
+                </Grid>
+                <Grid ColumnDefinitions="3*, *">
+                    <TextBlock Grid.Column="0" Style="{StaticResource BodyTextBlockStyle}" Text="服务端口：" />
+                    <TextBlock Grid.Column="1" Style="{StaticResource BodyTextBlockStyle}"
+                               Text="7132 (https), 7131 (http)" />
+                </Grid>
+                <Grid ColumnDefinitions="3*, *">
+                    <TextBlock Grid.Column="0" Style="{StaticResource BodyTextBlockStyle}" Text="Windows 版本：" />
+                    <TextBlock Grid.Column="1" Style="{StaticResource BodyTextBlockStyle}" 
+                               Text="{x:Bind ViewModel.WindowsVersionText}" />
+                </Grid>
+                <Grid ColumnDefinitions="3*, *">
+                    <TextBlock Grid.Column="0" Style="{StaticResource BodyTextBlockStyle}" Text="Termsrv 服务版本：" />
+                    <TextBlock Grid.Column="1" Style="{StaticResource BodyTextBlockStyle}"
+                               Text="{x:Bind ViewModel.TermsrvVersion, Mode=OneWay}" />
+                </Grid>
+                <Grid ColumnDefinitions="3*, *">
+                    <TextBlock Grid.Column="0" Style="{StaticResource BodyTextBlockStyle}" Text="远程桌面服务：" />
+                    <TextBlock Grid.Column="1" Style="{StaticResource BodyTextBlockStyle}" 
+                               Text="{x:Bind ViewModel.TermsrvStatusText, Mode=OneWay}" />
+                </Grid>
+                <Grid ColumnDefinitions="3*, *">
+                    <TextBlock Grid.Column="0" Style="{StaticResource BodyTextBlockStyle}" Text="Any2Remote 服务器：" />
+                    <TextBlock Grid.Column="1" Style="{StaticResource BodyTextBlockStyle}" 
+                               Text="{x:Bind ViewModel.ServerRunningStatusText, Mode=OneWay}" />
+                </Grid>
+                <Grid ColumnDefinitions="3*, *">
+                    <TextBlock Grid.Column="0" Style="{StaticResource BodyTextBlockStyle}" Text="增强模式：" />
+                    <TextBlock Grid.Column="1" Style="{StaticResource BodyTextBlockStyle}" 
+                               Text="{x:Bind ViewModel.EnhancedModeStatusText, Mode=OneWay}" />
+                </Grid>
+            </StackPanel>
+        </Expander>
+        <Button
+            x:Name="ConfigEnhanceModeBtn"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            HorizontalContentAlignment="Stretch"
+            Padding="15"
+            Click="ConfigEnhanceModeBtn_Click">
+            <Grid ColumnSpacing="20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.5*" />
+                    <ColumnDefinition Width="10*" />
+                    <ColumnDefinition Width="0.5*" />
+                </Grid.ColumnDefinitions>
+                <FontIcon FontSize="25" Glyph="&#xEC7A;" Foreground="{StaticResource TextFillColorPrimaryBrush}" />
+                <StackPanel Orientation="Vertical" Grid.Column="1">
+                    <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}"
+                               Text="配置增强模式" />
+                    <TextBlock Style="{StaticResource BodyTextBlockStyle}"
+                               Text="安装，卸载，配置增强模式以启用 Any2Remote 的全部功能。" />
+                </StackPanel>
+                <FontIcon FontSize="10" Glyph="&#xE76C;" Foreground="{StaticResource TextFillColorPrimaryBrush}"
+                          Grid.Column="2" />
+            </Grid>
+        </Button>
+        <Button
+            x:Name="RestartServiceBtn"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            HorizontalContentAlignment="Stretch"
+            Padding="15"
+            Click="RestartServiceBtn_Click">
+            <Grid ColumnSpacing="20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.5*" />
+                    <ColumnDefinition Width="10*" />
+                    <ColumnDefinition Width="0.5*" />
+                </Grid.ColumnDefinitions>
+                <FontIcon FontSize="25" Glyph="&#xE72C;" Foreground="{StaticResource TextFillColorPrimaryBrush}" />
+                <StackPanel Orientation="Vertical" Grid.Column="1">
+                    <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}"
+                               Text="重启所有服务" />
+                    <TextBlock Style="{StaticResource BodyTextBlockStyle}"
+                               Text="如果运行出现异常，重启服务可能可以解决问题。" />
+                </StackPanel>
+                <FontIcon FontSize="10" Glyph="&#xE76C;" Foreground="{StaticResource TextFillColorPrimaryBrush}"
+                          Grid.Column="2" />
+            </Grid>
+        </Button>
+        <Button
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            HorizontalContentAlignment="Stretch"
+            Padding="15">
+            <Grid ColumnSpacing="20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.5*" />
+                    <ColumnDefinition Width="10*" />
+                    <ColumnDefinition Width="0.5*" />
+                </Grid.ColumnDefinitions>
+                <FontIcon FontSize="25" Glyph="&#xe7ee;"
+                          Foreground="{StaticResource TextFillColorPrimaryBrush}" />
+                <StackPanel Orientation="Vertical" Grid.Column="1">
+                    <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}"
+                               Text="Any2Remote 客户端连接与用户" />
+                    <TextBlock Style="{StaticResource BodyTextBlockStyle}"
+                               Text="管理用户与客户端的连接" />
+                </StackPanel>
+                <FontIcon FontSize="10" Glyph="&#xE76C;" Foreground="{StaticResource TextFillColorPrimaryBrush}"
+                          Grid.Column="2" />
+            </Grid>
+        </Button>
+        <TextBlock Text="Internet Explorer 支持" Style="{StaticResource BodyStrongTextBlockStyle}" />
+        <TextBlock Text="Internet Explorer 已于 2022 年 6 月 15 日停用。Any2Remote 内置了对于强制启用 Internet Explorer 的支持" />
+        <Button
+            x:Name="EnableInternetExplorerBtn"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            HorizontalContentAlignment="Stretch"
+            Padding="15"
+            Click="EnableInternetExplorerBtn_Click">
+            <Grid ColumnSpacing="20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.5*" />
+                    <ColumnDefinition Width="10*" />
+                    <ColumnDefinition Width="0.5*" />
+                </Grid.ColumnDefinitions>
+                <Image Width="25" Height="25" Source="/Assets/Icons/internet-explorer.svg">
+
+                </Image>
+                <StackPanel Orientation="Vertical" Grid.Column="1">
+                    <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}"
+                               Text="启用 Internet Explorer 支持" />
+                    <TextBlock Style="{StaticResource BodyTextBlockStyle}"
+                               Text="修改 Windows 系统文件，强制启用 Internet Explorer。" />
+                </StackPanel>
+                <FontIcon FontSize="10" Glyph="&#xE76C;" Foreground="{StaticResource TextFillColorPrimaryBrush}"
+                          Grid.Column="2" />
+            </Grid>
+        </Button>
         <TextBlock Text="重置选项" Style="{StaticResource BodyStrongTextBlockStyle}" />
         <Button
             HorizontalAlignment="Stretch"

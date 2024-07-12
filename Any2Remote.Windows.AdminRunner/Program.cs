@@ -1,5 +1,6 @@
 using Any2Remote.Windows.AdminRunner.Services;
 using Any2Remote.Windows.AdminRunner.Services.Contracts;
+using HimuRdp.Core;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Any2Remote.Windows.AdminRunner
@@ -10,7 +11,6 @@ namespace Any2Remote.Windows.AdminRunner
         static void Main(string[] args)
         {
             ApplicationConfiguration.Initialize();            
-
             try
             {
                 var services = new ServiceCollection();
@@ -44,6 +44,10 @@ namespace Any2Remote.Windows.AdminRunner
             else if (args[0] == "create-ca-cert")
             {
                 services.AddSingleton<IRunnerActionService, CreateCertificateService>();
+            }
+            else if (args[0] == "config-enhance-mode")
+            {
+                services.AddSingleton<IRunnerActionService, ConfigureEnhanceModeService>();
             }
             else
             {

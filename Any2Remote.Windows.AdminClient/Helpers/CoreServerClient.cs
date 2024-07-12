@@ -58,7 +58,7 @@ namespace Any2Remote.Windows.AdminClient.Helpers
             {
                 var response = await _httpClient.DeleteAsync($"api/remoteapps/{application.AppId}");
                 if (!response.IsSuccessStatusCode)
-                    throw new ServerStatusException(ServerStatus.InternalError);
+                    throw new ServerStatusException(ServiceStatus.InternalError);
             }
             catch (Exception e)
             {

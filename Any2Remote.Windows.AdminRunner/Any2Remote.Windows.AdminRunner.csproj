@@ -18,6 +18,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\Any2Remote.Windows.Shared\Any2Remote.Windows.Shared.csproj" />
+		<ProjectReference Include="..\HimuRdp.Core\HimuRdp.Core.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

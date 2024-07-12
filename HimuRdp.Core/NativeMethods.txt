@@ -1,0 +1,12 @@
+﻿Wow64DisableWow64FsRedirection
+Wow64RevertWow64FsRedirection
+OpenSCManager
+OpenService
+CloseServiceHandle
+ChangeServiceConfig
+SC_MANAGER_CONNECT
+OpenProcessToken
+GetCurrentProcess
+TOKEN_PRIVILEGES
+AdjustTokenPrivileges
+LookupPrivilegeValue

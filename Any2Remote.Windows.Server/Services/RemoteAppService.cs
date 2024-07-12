@@ -22,9 +22,9 @@ namespace Any2Remote.Windows.Server.Services
             {
                 RegistryKey appKey = appsKey.OpenSubKey(appId)!;
                 string name = appKey.GetValue("Name") as string
-                    ?? throw new ServerStatusException(ServerStatus.InternalError, $"no such value {RemoteAppKeyPath}\\Name");
+                    ?? throw new ServerStatusException(ServiceStatus.InternalError, $"no such value {RemoteAppKeyPath}\\Name");
                 string path = appKey.GetValue("Path") as string
-                    ?? throw new ServerStatusException(ServerStatus.InternalError, $"no such value {RemoteAppKeyPath}\\Path");
+                    ?? throw new ServerStatusException(ServiceStatus.InternalError, $"no such value {RemoteAppKeyPath}\\Path");
                 string workingDir = appKey.GetValue("WorkingDirectory") as string
                     ?? string.Empty;
                 string commandLine = appKey.GetValue("CommandLine") as string
@@ -67,7 +67,7 @@ namespace Any2Remote.Windows.Server.Services
         public void RemoveRemoteApp(string appId)
         {
             var appsKey = Registry.LocalMachine.OpenSubKey(RemoteAppKeyPath, true)
-                ?? throw new ServerStatusException(ServerStatus.InternalError, $"no such key {RemoteAppKeyPath}");
+                ?? throw new ServerStatusException(ServiceStatus.InternalError, $"no such key {RemoteAppKeyPath}");
             appsKey.DeleteSubKeyTree(appId);
             appsKey.Close();
         }
@@ -95,7 +95,7 @@ namespace Any2Remote.Windows.Server.Services
             }
             catch (Exception e)
             {
-                throw new ServerStatusException(ServerStatus.InternalError, e.Message);
+                throw new ServerStatusException(ServiceStatus.InternalError, e.Message);
             }
         }
 

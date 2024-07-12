@@ -37,4 +37,19 @@ public sealed partial class ServerPage : Page
             ViewModel.ResetApplication();
         }
     }
+
+    private void ConfigEnhanceModeBtn_Click(object sender, RoutedEventArgs e)
+    {
+        ViewModel.ConfigureEnhancedMode();
+    }
+
+    private void RestartServiceBtn_Click(object sender, RoutedEventArgs e)
+    {
+        ViewModel.RestartApplication();
+    }
+
+    private void EnableInternetExplorerBtn_Click(object sender, RoutedEventArgs e)
+    {
+        ViewModel.EnableInternetExplorerSupport();
+    }
 }

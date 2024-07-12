@@ -78,7 +78,7 @@ public static class WindowsCommon
     /// Get rdp services status from registry.
     /// </summary>
     /// <remarks> This method requires elevated permissions. </remarks>
-    public static ServerStatus GetRdpServerStatus()
+    public static ServiceStatus GetRdpServerStatus()
     {
         var key = Registry.LocalMachine.OpenSubKey(@"SYSTEM\CurrentControlSet\Control\Terminal Server", false);
         var remoteAppKey = Registry.LocalMachine.OpenSubKey(
@@ -86,18 +86,18 @@ public static class WindowsCommon
 
         if (key == null || remoteAppKey == null)
         {
-            return ServerStatus.NotSupported;
+            return ServiceStatus.NoRdpSupported;
         }
         var denyConnection = key.GetValue("fDenyTSConnections") as int?;
         var allowRemoteApps = remoteAppKey.GetValue("fDisabledAllowList") as int?;
         if (!denyConnection.HasValue || denyConnection.Value == 1
             || !allowRemoteApps.HasValue || allowRemoteApps.Value == 0)
         {
-            return ServerStatus.NotInitialized;
+            return ServiceStatus.NotInitializeServer;
         }
 
         Process[] processes = Process.GetProcessesByName("Any2Remote.Windows.Server");
-        return processes.Length == 0 ? ServerStatus.Disconnected : ServerStatus.Connected;
+        return processes.Length == 0 ? ServiceStatus.None : ServiceStatus.ServerRunning;
     }
 
 

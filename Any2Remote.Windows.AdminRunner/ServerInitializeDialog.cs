@@ -1,14 +1,13 @@
 ﻿using System.Management.Automation;
-using System.Security;
 using System.Text.Json;
 using Any2Remote.Windows.Shared.Helpers;
 using FileStream = System.IO.FileStream;
 
 namespace Any2Remote.Windows.AdminRunner;
 
-public partial class CreateNewCertificateDialog : Form
+public partial class ServerInitializeDialog : Form
 {
-    public CreateNewCertificateDialog()
+    public ServerInitializeDialog()
     {
         InitializeComponent();
     }

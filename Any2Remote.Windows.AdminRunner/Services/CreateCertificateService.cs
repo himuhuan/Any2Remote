@@ -6,7 +6,7 @@ namespace Any2Remote.Windows.AdminRunner.Services
     {
         public void Run(string[] args)
         {
-            CreateNewCertificateDialog dialog = new();
+            ServerInitializeDialog dialog = new();
             Application.Run(dialog);
         }
     }

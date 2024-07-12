@@ -1,6 +1,6 @@
 ﻿namespace Any2Remote.Windows.AdminRunner
 {
-    partial class CreateNewCertificateDialog
+    partial class ServerInitializeDialog
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CreateNewCertificateDialog));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ServerInitializeDialog));
             label1 = new Label();
             pictureBox1 = new PictureBox();
             label2 = new Label();
@@ -57,7 +57,7 @@
             pictureBox1.Image = (Image) resources.GetObject("pictureBox1.Image");
             pictureBox1.Location = new Point(12, 9);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(48, 48);
+            pictureBox1.Size = new Size(64, 64);
             pictureBox1.TabIndex = 1;
             pictureBox1.TabStop = false;
             // 
@@ -142,7 +142,7 @@
             certPassword.Size = new Size(394, 23);
             certPassword.TabIndex = 11;
             // 
-            // CreateNewCertificateDialog
+            // ServerInitializeDialog
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -162,7 +162,7 @@
             Icon = (Icon) resources.GetObject("$this.Icon");
             MaximizeBox = false;
             MinimizeBox = false;
-            Name = "CreateNewCertificateDialog";
+            Name = "ServerInitializeDialog";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "创建 Any2Remote Server 证书";
             ((System.ComponentModel.ISupportInitialize) pictureBox1).EndInit();
