@@ -12,15 +12,15 @@
             DragOver="PublishRemoteAppDropArea_DragOver"
             Drop="PublishRemoteAppDropArea_Drop"
             Background="{StaticResource CardStrokeColorDefault}" 
-            Height="200"
+            Height="300"
             Spacing="10"
-            Padding="30">
-            <FontIcon Glyph="&#xE71B;" FontSize="60" />
-            <TextBlock Style="{StaticResource SubheaderTextBlockStyle}" HorizontalAlignment="Center">
-                拖放快捷方式到此处以发布 RemoteApp
+            Padding="80">
+            <FontIcon Glyph="&#xE898;" FontSize="60" />
+            <TextBlock  Style="{StaticResource SubheaderTextBlockStyle}" HorizontalAlignment="Center">
+                拖放到此处以发布 RemoteApp
             </TextBlock>
         </StackPanel>
-        
+
         <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}" 
                    Text="或通过以下方式发布" />
         <Button

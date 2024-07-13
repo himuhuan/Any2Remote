@@ -27,6 +27,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Any2Remote.Windows.ApiTest"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Any2Remote.Windows.Shared", "Any2Remote.Windows.Shared\Any2Remote.Windows.Shared.csproj", "{2CCE7234-218B-4313-A461-22F76055FC9C}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HimuRdp.Core", "HimuRdp.Core\HimuRdp.Core.csproj", "{D698B610-019A-4325-A2D0-25FBE32C73A5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -181,6 +183,26 @@ Global
 		{2CCE7234-218B-4313-A461-22F76055FC9C}.Release|x64.Build.0 = Release|Any CPU
 		{2CCE7234-218B-4313-A461-22F76055FC9C}.Release|x86.ActiveCfg = Release|Any CPU
 		{2CCE7234-218B-4313-A461-22F76055FC9C}.Release|x86.Build.0 = Release|Any CPU
+		{D698B610-019A-4325-A2D0-25FBE32C73A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D698B610-019A-4325-A2D0-25FBE32C73A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D698B610-019A-4325-A2D0-25FBE32C73A5}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{D698B610-019A-4325-A2D0-25FBE32C73A5}.Debug|ARM.Build.0 = Debug|Any CPU
+		{D698B610-019A-4325-A2D0-25FBE32C73A5}.Debug|arm64.ActiveCfg = Debug|Any CPU
+		{D698B610-019A-4325-A2D0-25FBE32C73A5}.Debug|arm64.Build.0 = Debug|Any CPU
+		{D698B610-019A-4325-A2D0-25FBE32C73A5}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{D698B610-019A-4325-A2D0-25FBE32C73A5}.Debug|x64.Build.0 = Debug|Any CPU
+		{D698B610-019A-4325-A2D0-25FBE32C73A5}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D698B610-019A-4325-A2D0-25FBE32C73A5}.Debug|x86.Build.0 = Debug|Any CPU
+		{D698B610-019A-4325-A2D0-25FBE32C73A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D698B610-019A-4325-A2D0-25FBE32C73A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D698B610-019A-4325-A2D0-25FBE32C73A5}.Release|ARM.ActiveCfg = Release|Any CPU
+		{D698B610-019A-4325-A2D0-25FBE32C73A5}.Release|ARM.Build.0 = Release|Any CPU
+		{D698B610-019A-4325-A2D0-25FBE32C73A5}.Release|arm64.ActiveCfg = Release|Any CPU
+		{D698B610-019A-4325-A2D0-25FBE32C73A5}.Release|arm64.Build.0 = Release|Any CPU
+		{D698B610-019A-4325-A2D0-25FBE32C73A5}.Release|x64.ActiveCfg = Release|Any CPU
+		{D698B610-019A-4325-A2D0-25FBE32C73A5}.Release|x64.Build.0 = Release|Any CPU
+		{D698B610-019A-4325-A2D0-25FBE32C73A5}.Release|x86.ActiveCfg = Release|Any CPU
+		{D698B610-019A-4325-A2D0-25FBE32C73A5}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

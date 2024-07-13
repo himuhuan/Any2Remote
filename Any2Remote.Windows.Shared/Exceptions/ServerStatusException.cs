@@ -4,15 +4,15 @@ namespace Any2Remote.Windows.Shared.Exceptions
 {
     public class ServerStatusException : Any2RemoteException
     {
-        public ServerStatus Status { get; init; }
+        public ServiceStatus Status { get; init; }
 
-        public ServerStatusException(ServerStatus status)
+        public ServerStatusException(ServiceStatus status)
             : base($"Server status is {status}")
         {
             Status = status;
         }
 
-        public ServerStatusException(ServerStatus status, string message)
+        public ServerStatusException(ServiceStatus status, string message)
             : base(message)
         {
             Status = status;

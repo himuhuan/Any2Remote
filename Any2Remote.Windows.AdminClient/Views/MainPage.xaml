@@ -5,8 +5,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
-    <StackPanel x:Name="ContentArea" Spacing="5">
-        <Grid Grid.ColumnSpan="2" ColumnSpacing="10">
+    <StackPanel Spacing="5">
+        <Grid ColumnSpacing="10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="9*" />
@@ -17,31 +17,29 @@
             </Grid.RowDefinitions>
             <FontIcon
                 FontSize="80"
-                Glyph="{x:Bind ViewModel.StatusIcon, Mode=OneWay}" 
+                Glyph="{x:Bind ViewModel.StatusIcon, Mode=OneWay}"
                 Foreground="{x:Bind ViewModel.StatusColor, Mode=OneWay}" />
             <StackPanel Orientation="Vertical" Grid.Column="1" Spacing="3">
                 <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}"
                            Text="{x:Bind ViewModel.StatusTitle, Mode=OneWay}" />
-                <TextBlock Style="{StaticResource SubtitleTextBlockStyle}" 
+                <TextBlock Style="{StaticResource SubtitleTextBlockStyle}"
                            Text="{x:Bind ViewModel.ComputerName}" />
-                <ProgressBar IsIndeterminate="{x:Bind ViewModel.RunningTask, Mode=OneWay}"/>
-                <TextBlock Style="{StaticResource BodyTextBlockStyle}" 
+                <ProgressBar IsIndeterminate="{x:Bind ViewModel.RunningTask, Mode=OneWay}" />
+                <TextBlock Style="{StaticResource BodyTextBlockStyle}"
                            Text="{x:Bind ViewModel.StatusDescription, Mode=OneWay}" />
             </StackPanel>
 
             <Button Grid.Column="2"
                     MinWidth="80"
                     Content="{x:Bind ViewModel.ServerActionButtonContent, Mode=OneWay}"
-                    x:Name="ServerActionButton"
                     Click="ServerActionButton_Click"
                     Style="{StaticResource AccentButtonStyle}" />
 
         </Grid>
-        <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}" 
+        <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}"
                    Text="管理" />
         <Button
-            x:Name="NavToServerPageBtn"
-            HorizontalAlignment="Stretch" 
+            HorizontalAlignment="Stretch"
             VerticalAlignment="Stretch"
             HorizontalContentAlignment="Stretch"
             Padding="15"
@@ -52,19 +50,21 @@
                     <ColumnDefinition Width="10*" />
                     <ColumnDefinition Width="0.5*" />
                 </Grid.ColumnDefinitions>
-                <FontIcon FontSize="25" Glyph="&#xEd5c;" Foreground="{StaticResource TextFillColorPrimaryBrush}" />
+                <FontIcon FontSize="25" Glyph="&#xE770;" Foreground="{StaticResource TextFillColorPrimaryBrush}" />
                 <StackPanel Orientation="Vertical" Grid.Column="1">
-                    <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}" 
-                               Text="Any2Remote 服务器" Grid.Column="1" />
-                    <TextBlock Style="{StaticResource BodyTextBlockStyle}" 
-                               Text="配置或查看 Any2Remote 服务器设定" 
-                               Grid.Column="1" />
+                    <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}"
+                               Text="Any2Remote 服务" />
+                    <TextBlock Style="{StaticResource BodyTextBlockStyle}"
+                               Text="自定义配置或查看 Any2Remote 服务设定" />
                 </StackPanel>
-                <FontIcon FontSize="10" Glyph="&#xE76C;" Foreground="{StaticResource TextFillColorPrimaryBrush}" Grid.Column="2" />
+                <FontIcon FontSize="10" Glyph="&#xE76C;" Foreground="{StaticResource TextFillColorPrimaryBrush}"
+                          Grid.Column="2" />
             </Grid>
         </Button>
-        <Button 
-            HorizontalAlignment="Stretch" 
+        <Button
+            x:Name="NavToRemoteAppBtn"
+            Click="NavToRemoteAppBtn_Click"
+            HorizontalAlignment="Stretch"
             VerticalAlignment="Stretch"
             HorizontalContentAlignment="Stretch"
             Padding="15">
@@ -74,20 +74,22 @@
                     <ColumnDefinition Width="10*" />
                     <ColumnDefinition Width="0.5*" />
                 </Grid.ColumnDefinitions>
-                <FontIcon FontSize="25" Glyph="&#xe71d;" 
+                <FontIcon FontSize="25" Glyph="&#xe71d;"
                           Foreground="{StaticResource TextFillColorPrimaryBrush}" />
                 <StackPanel Orientation="Vertical" Grid.Column="1">
-                    <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}" 
-                       Text="远程应用" Grid.Column="1" />
-                    <TextBlock Style="{StaticResource BodyTextBlockStyle}" 
-                       Text="管理所有Any2Remote客户端上发布的 Remote App" 
-                       Grid.Column="1" />
+                    <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}"
+                               Text="远程应用" />
+                    <TextBlock Style="{StaticResource BodyTextBlockStyle}"
+                               Text="管理所有Any2Remote客户端上发布的 Remote App" />
                 </StackPanel>
-                <FontIcon FontSize="10" Glyph="&#xE76C;" Foreground="{StaticResource TextFillColorPrimaryBrush}" Grid.Column="2" />
+                <FontIcon FontSize="10" Glyph="&#xE76C;" Foreground="{StaticResource TextFillColorPrimaryBrush}"
+                          Grid.Column="2" />
             </Grid>
         </Button>
-        <Button 
-            HorizontalAlignment="Stretch" 
+        <Button
+            x:Name="NavToSessionBtn"
+            Click="NavToSessionBtn_Click"
+            HorizontalAlignment="Stretch"
             VerticalAlignment="Stretch"
             HorizontalContentAlignment="Stretch"
             Padding="15">
@@ -97,42 +99,16 @@
                     <ColumnDefinition Width="10*" />
                     <ColumnDefinition Width="0.5*" />
                 </Grid.ColumnDefinitions>
-                <FontIcon FontSize="25" Glyph="&#xe7ee;" 
-                  Foreground="{StaticResource TextFillColorPrimaryBrush}" />
-                <StackPanel Orientation="Vertical" Grid.Column="1">
-                    <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}" 
-                               Text="Any2Remote 客户端连接与用户" 
-                               Grid.Column="1" />
-                    <TextBlock Style="{StaticResource BodyTextBlockStyle}"              
-                               Text="管理用户与客户端的连接" 
-                               Grid.Column="1" />
-                </StackPanel>
-                <FontIcon FontSize="10" Glyph="&#xE76C;" Foreground="{StaticResource TextFillColorPrimaryBrush}" Grid.Column="2" />
-            </Grid>
-        </Button>
-        <Button 
-            HorizontalAlignment="Stretch" 
-            VerticalAlignment="Stretch"
-            HorizontalContentAlignment="Stretch"
-            Padding="15">
-            <Grid ColumnSpacing="20">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="0.5*" />
-                    <ColumnDefinition Width="10*" />
-                    <ColumnDefinition Width="0.5*" />
-                </Grid.ColumnDefinitions>
-                <FontIcon FontSize="25" 
-                          Glyph="&#xe7ef;"
+                <FontIcon FontSize="25" Glyph="&#xe7ee;"
                           Foreground="{StaticResource TextFillColorPrimaryBrush}" />
                 <StackPanel Orientation="Vertical" Grid.Column="1">
-                    <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}" 
-                       Text="安全与权限" 
-                       Grid.Column="1" />
-                    <TextBlock Style="{StaticResource BodyTextBlockStyle}"              
-                       Text="管理用户与客户端的连接" 
-                       Grid.Column="1" />
+                    <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}"
+                               Text="Any2Remote 客户端连接与用户" />
+                    <TextBlock Style="{StaticResource BodyTextBlockStyle}"
+                               Text="管理用户与客户端的连接" />
                 </StackPanel>
-                <FontIcon FontSize="10" Glyph="&#xE76C;" Foreground="{StaticResource TextFillColorPrimaryBrush}" Grid.Column="2" />
+                <FontIcon FontSize="10" Glyph="&#xE76C;" Foreground="{StaticResource TextFillColorPrimaryBrush}"
+                          Grid.Column="2" />
             </Grid>
         </Button>
     </StackPanel>

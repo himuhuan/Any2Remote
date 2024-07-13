@@ -43,9 +43,6 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\Any2Remote.Windows.Shared\Any2Remote.Windows.Shared.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Models\" />
+	  <ProjectReference Include="..\HimuRdp.Core\HimuRdp.Core.csproj" />
 	</ItemGroup>
 </Project>

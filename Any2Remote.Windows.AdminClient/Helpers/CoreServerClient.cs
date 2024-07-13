@@ -9,10 +9,13 @@ namespace Any2Remote.Windows.AdminClient.Helpers
 {
     public class CoreServerClient : ICoreServerClient
     {
+        public const string ServerBaseAddress = "https://any2remote.local:7132/";
+        public const string ServerRemoteHub = "https://any2remote.local:7132/remotehub";
+
         private readonly HttpClient _httpClient = new()
         {
-            // TODO: https cretificate required
-            BaseAddress = new Uri("https://localhost:7132/")
+            // TODO: https certificate required
+            BaseAddress = new Uri(ServerBaseAddress)
         };
 
         public async Task<List<RemoteApplication>> GetApplicationsAsync()
@@ -55,7 +58,7 @@ namespace Any2Remote.Windows.AdminClient.Helpers
             {
                 var response = await _httpClient.DeleteAsync($"api/remoteapps/{application.AppId}");
                 if (!response.IsSuccessStatusCode)
-                    throw new ServerStatusException(ServerStatus.InternalError);
+                    throw new ServerStatusException(ServiceStatus.InternalError);
             }
             catch (Exception e)
             {

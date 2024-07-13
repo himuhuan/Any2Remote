@@ -10,6 +10,7 @@
     <ScrollView Padding="20" VerticalScrollBarVisibility="Hidden">
         <StackPanel>
             <!--- Loading -->
+            
             <StackPanel Spacing="10" x:Name="LoadingPanel">
                 <TextBlock Style="{StaticResource BaseTextBlockStyle}">
                     Any2Remote 正在分析要发布的 Remote App, 这可能需要一点时间。

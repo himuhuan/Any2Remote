@@ -11,7 +11,7 @@ public interface ILocalService
 
     List<LocalApp> GetInstalledApplications(LocalAppsRequest request);
 
-    ServerStatus GetServerStatus();
+    ServiceStatus GetServerStatus();
 
     void StartServer();
 
@@ -19,5 +19,7 @@ public interface ILocalService
 
     void StopServer();
 
-    void InitServer();
+    void StartupServer();
+    
+    void ResetApplication();
 }

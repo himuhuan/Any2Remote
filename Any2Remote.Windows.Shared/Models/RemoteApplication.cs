@@ -1,5 +1,4 @@
 ﻿using Any2Remote.Windows.Grpc.Services;
-using Any2Remote.Windows.Shared.Models;
 
 namespace Any2Remote.Windows.Shared.Models
 {
@@ -31,7 +30,7 @@ namespace Any2Remote.Windows.Shared.Models
         public RemoteApplication(RemoteApplication application)
             : this(application.AppId, application)
         {
-
+            LocalInfo = application.LocalInfo;
         }
     }
 }

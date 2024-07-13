@@ -118,16 +118,16 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AppDisplayName" xml:space="preserve">
-    <value>Any2Remote.Windows.AdminClient</value>
+    <value>Any2Remote 管理仪表盘</value>
   </data>
   <data name="AppDescription" xml:space="preserve">
-    <value>Any2Remote.Windows.AdminClient</value>
+    <value>Any2Remote 管理仪表盘</value>
   </data>
   <data name="Shell_Main.Content" xml:space="preserve">
     <value>主页</value>
   </data>
   <data name="Settings_Personalization.Text" xml:space="preserve">
-    <value>Personalization</value>
+    <value>主题</value>
   </data>
   <data name="Settings_Theme.Text" xml:space="preserve">
     <value>Theme</value>
@@ -142,19 +142,19 @@
     <value>Default</value>
   </data>
   <data name="Settings_About.Text" xml:space="preserve">
-    <value>About this application</value>
+    <value>关于 Any2Remote</value>
   </data>
   <data name="Settings_AboutDescription.Text" xml:space="preserve">
-    <value>TODO: Replace with your app description.</value>
+    <value>Any2Remote 是管理远程连接和远程桌面的服务器端应用程序。安装此程序表示你已同意我们的许可协议。</value>
   </data>
   <data name="SettingsPage_PrivacyTermsLink.Content" xml:space="preserve">
-    <value>Privacy Statement</value>
+    <value>协议</value>
   </data>
   <data name="SettingsPage_PrivacyTermsLink.NavigateUri" xml:space="preserve">
-    <value>https://YourPrivacyUrlGoesHere/</value>
+    <value>https://www.apache.org/licenses/LICENSE-2.0.html</value>
   </data>
   <data name="Shell_Server.Content" xml:space="preserve">
-    <value>Any2Remote 服务器</value>
+    <value>Any2Remote 服务与系统</value>
   </data>
   <data name="Shell_RemoteApp.Content" xml:space="preserve">
     <value>RemoteApp</value>
@@ -167,5 +167,11 @@
   </data>
   <data name="Shell_EditRemoteApp.Content" xml:space="preserve">
     <value>EditRemoteApp</value>
+  </data>
+  <data name="Shell_TsSessionManage.Content" xml:space="preserve">
+    <value>远程桌面连接会话管理</value>
+  </data>
+  <data name="Shell_TermsrvSession.Content" xml:space="preserve">
+    <value>远程桌面连接会话</value>
   </data>
 </root>

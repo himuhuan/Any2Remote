@@ -5,10 +5,8 @@ using Microsoft.UI.Xaml;
 using Microsoft.AspNetCore.SignalR.Client;
 using Any2Remote.Windows.Shared.Helpers;
 using Any2Remote.Windows.Shared.Models;
-using Google.Protobuf.WellKnownTypes;
 using Windows.Storage.Pickers;
-using static System.String;
-using FileAttributes = Windows.Storage.FileAttributes;
+using Any2Remote.Windows.AdminClient.Helpers;
 
 namespace Any2Remote.Windows.AdminClient.Views;
 
@@ -22,13 +20,12 @@ public sealed partial class PublishRemoteAppPage : Page
     private HubConnection _hubConnection = default!;
     private async void InitializeSignalRAsync()
     {
-        // TODO: https cretificate required
         _hubConnection = new HubConnectionBuilder()
-            .WithUrl("https://localhost:7132/remotehub")
+            .WithUrl(CoreServerClient.ServerRemoteHub)
             .Build();
 
         // auto reconnect
-        _hubConnection.Closed += async (error) =>
+        _hubConnection.Closed += async (_) =>
         {
             await Task.Delay(new Random().Next(0, 5) * 1000);
             await _hubConnection.StartAsync();
@@ -39,7 +36,7 @@ public sealed partial class PublishRemoteAppPage : Page
 
         });
 
-        _hubConnection.On<string>("ping", (connectId) =>
+        _hubConnection.On<string>("ping", (_) =>
         {
             // Get the connection id from the server
         });
@@ -154,6 +151,7 @@ public sealed partial class PublishRemoteAppPage : Page
         {
             return;
         }
+
         var applicationToPublish = new ExecutableApplication
         {
             Path = file.Path,

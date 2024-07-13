@@ -11,6 +11,7 @@ using System.Drawing;
 using Any2Remote.Windows.Grpc.Services;
 using Any2Remote.Windows.Shared.Exceptions;
 using Any2Remote.Windows.Shared.Extensions;
+using File = IWshRuntimeLibrary.File;
 
 namespace Any2Remote.Windows.Shared.Helpers;
 
@@ -52,7 +53,7 @@ public static class WindowsCommon
                 Description = shortcut.TryGetDescription() ?? "由于内部调用发生了错误，Any2Remote 无法获取该程序的描述。"
             };
         }
-        catch (Exception exception)
+        catch (Exception)
         {
             return null;
         }
@@ -77,7 +78,7 @@ public static class WindowsCommon
     /// Get rdp services status from registry.
     /// </summary>
     /// <remarks> This method requires elevated permissions. </remarks>
-    public static ServerStatus GetRdpServerStatus()
+    public static ServiceStatus GetRdpServerStatus()
     {
         var key = Registry.LocalMachine.OpenSubKey(@"SYSTEM\CurrentControlSet\Control\Terminal Server", false);
         var remoteAppKey = Registry.LocalMachine.OpenSubKey(
@@ -85,23 +86,18 @@ public static class WindowsCommon
 
         if (key == null || remoteAppKey == null)
         {
-            return ServerStatus.NotSupported;
+            return ServiceStatus.NoRdpSupported;
         }
         var denyConnection = key.GetValue("fDenyTSConnections") as int?;
         var allowRemoteApps = remoteAppKey.GetValue("fDisabledAllowList") as int?;
         if (!denyConnection.HasValue || denyConnection.Value == 1
             || !allowRemoteApps.HasValue || allowRemoteApps.Value == 0)
         {
-            return ServerStatus.NotInitialized;
+            return ServiceStatus.NotInitializeServer;
         }
 
         Process[] processes = Process.GetProcessesByName("Any2Remote.Windows.Server");
-        if (processes.Length == 0)
-        {
-            return ServerStatus.Disconnected;
-        }
-
-        return ServerStatus.Connected;
+        return processes.Length == 0 ? ServiceStatus.None : ServiceStatus.ServerRunning;
     }
 
 
@@ -255,7 +251,7 @@ public static class WindowsCommon
             {
                 continue;
             }
-            string iconUrl = subkey.GetValue("DisplayIcon") as string ?? GetIconUrlFromUnstallString(uninstallString);
+            string iconUrl = subkey.GetValue("DisplayIcon") as string ?? GetIconUrlFromUninstallString(uninstallString);
             bool isSystemComponent = subkey.GetValue("SystemComponent") as int? == 1;
             // If the SystemComponent is 1, skip this entry
             if (!includeSystemComponent && isSystemComponent)
@@ -279,7 +275,7 @@ public static class WindowsCommon
     /// 3. C:\Program Files\Any2Remote\uninstall.exe /S
     /// 卸载程序路径中可以有空格.
     /// </summary>
-    public static string GetIconUrlFromUnstallString(string uninstallString)
+    public static string GetIconUrlFromUninstallString(string uninstallString)
     {
         return ParseCommandLine(uninstallString).Program;
     }
@@ -296,15 +292,28 @@ public static class WindowsCommon
             string longerName = app.DisplayName, shorterName = executable.DisplayName;
             if (longerName.Length < shorterName.Length)
                 (longerName, shorterName) = (shorterName, longerName);
-            if (longerName.Contains(shorterName))
-            {
-                // certain result
-                if (longerName.Length == shorterName.Length)
-                    return new List<LocalApp> { app };
-                possibleResult.Add(app);
-            }
+            if (!longerName.Contains(shorterName)) 
+                continue;
+            // certain result
+            if (longerName.Length == shorterName.Length)
+                return new List<LocalApp> { app };
+            possibleResult.Add(app);
         }
         return possibleResult;
+    }
+
+    public static void DeleteDirectory(string path)
+    {
+        DirectoryInfo dir = new DirectoryInfo(path);
+        foreach (FileInfo file in dir.EnumerateFiles())
+        {
+            file.Delete();
+        }
+
+        foreach (DirectoryInfo directory in dir.EnumerateDirectories())
+        {
+            directory.Delete(true);
+        }
     }
 
 }

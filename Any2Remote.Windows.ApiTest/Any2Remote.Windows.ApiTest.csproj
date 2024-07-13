@@ -23,6 +23,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\Any2Remote.Windows.AdminClient.Core\Any2Remote.Windows.AdminClient.Core.csproj" />
+		<ProjectReference Include="..\HimuRdp.Core\HimuRdp.Core.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

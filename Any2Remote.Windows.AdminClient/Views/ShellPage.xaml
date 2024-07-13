@@ -6,7 +6,6 @@
     xmlns:behaviors="using:Any2Remote.Windows.AdminClient.Behaviors"
     xmlns:i="using:Microsoft.Xaml.Interactivity"
     Loaded="OnLoaded">
-
     <Grid>
         <Grid x:Name="AppTitleBar"
               Canvas.ZIndex="1"
@@ -21,7 +20,7 @@
                        VerticalAlignment="Center"
                        TextWrapping="NoWrap"
                        Style="{StaticResource CaptionTextBlockStyle}"
-                       Margin="28,0,0,0"/>
+                       Margin="28,0,0,0" />
         </Grid>
         <NavigationView
             x:Name="NavigationViewControl"
@@ -34,30 +33,28 @@
             DisplayModeChanged="NavigationViewControl_DisplayModeChanged"
             Header="{x:Bind ((ContentControl)ViewModel.Selected).Content, Mode=OneWay}">
             <NavigationView.MenuItems>
-                <NavigationViewItem 
-                    x:Uid="Shell_Main" helpers:NavigationHelper.NavigateTo="Any2Remote.Windows.AdminClient.ViewModels.MainViewModel">
+                <NavigationViewItem
+                    x:Uid="Shell_Main"
+                    helpers:NavigationHelper.NavigateTo="Any2Remote.Windows.AdminClient.ViewModels.MainViewModel">
                     <NavigationViewItem.Icon>
-                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE80F;"/>
+                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE80F;" />
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
-                <NavigationViewItem x:Uid="Shell_Server" helpers:NavigationHelper.NavigateTo="Any2Remote.Windows.AdminClient.ViewModels.ServerViewModel">
+                <NavigationViewItem x:Uid="Shell_Server"
+                                    helpers:NavigationHelper.NavigateTo="Any2Remote.Windows.AdminClient.ViewModels.ServerViewModel">
                     <NavigationViewItem.Icon>
-                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xEd5c;"/>
+                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE770;" />
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
-                <NavigationViewItem x:Uid="Shell_RemoteApp" helpers:NavigationHelper.NavigateTo="Any2Remote.Windows.AdminClient.ViewModels.RemoteAppViewModel">
+                <NavigationViewItem x:Uid="Shell_RemoteApp"
+                                    helpers:NavigationHelper.NavigateTo="Any2Remote.Windows.AdminClient.ViewModels.RemoteAppViewModel">
                     <NavigationViewItem.Icon>
-                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE71D;"/>
+                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE71D;" />
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
-                <NavigationViewItem x:Uid="Shell_PublishRemoteApp" helpers:NavigationHelper.NavigateTo="Any2Remote.Windows.AdminClient.ViewModels.PublishRemoteAppViewModel">
+                <NavigationViewItem x:Uid="Shell_TermsrvSession" helpers:NavigationHelper.NavigateTo="Any2Remote.Windows.AdminClient.ViewModels.TermsrvSessionViewModel">
                     <NavigationViewItem.Icon>
-                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE836;"/>
-                    </NavigationViewItem.Icon>
-                </NavigationViewItem>
-                <NavigationViewItem x:Uid="Shell_InstalledAppsList" helpers:NavigationHelper.NavigateTo="Any2Remote.Windows.AdminClient.ViewModels.InstalledAppsListViewModel">
-                    <NavigationViewItem.Icon>
-                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xEA40;"/>
+                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xe7ee;"/>
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
             </NavigationView.MenuItems>
@@ -84,9 +81,12 @@
                     </behaviors:NavigationViewHeaderBehavior.DefaultHeaderTemplate>
                 </behaviors:NavigationViewHeaderBehavior>
             </i:Interaction.Behaviors>
-            <Grid Margin="{StaticResource NavigationViewPageContentMargin}">
-                <Frame x:Name="NavigationFrame" />
-            </Grid>
+            <ScrollView>
+                <Grid Margin="{StaticResource NavigationViewPageContentMargin}">
+                    <Frame x:Name="NavigationFrame" />
+                </Grid>
+            </ScrollView>
         </NavigationView>
+
     </Grid>
 </Page>
