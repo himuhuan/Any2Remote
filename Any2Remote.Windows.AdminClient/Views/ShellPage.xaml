@@ -52,16 +52,9 @@
                         <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE71D;" />
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
-                <NavigationViewItem x:Uid="Shell_PublishRemoteApp"
-                                    helpers:NavigationHelper.NavigateTo="Any2Remote.Windows.AdminClient.ViewModels.PublishRemoteAppViewModel">
+                <NavigationViewItem x:Uid="Shell_TermsrvSession" helpers:NavigationHelper.NavigateTo="Any2Remote.Windows.AdminClient.ViewModels.TermsrvSessionViewModel">
                     <NavigationViewItem.Icon>
-                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE836;" />
-                    </NavigationViewItem.Icon>
-                </NavigationViewItem>
-                <NavigationViewItem x:Uid="Shell_InstalledAppsList"
-                                    helpers:NavigationHelper.NavigateTo="Any2Remote.Windows.AdminClient.ViewModels.InstalledAppsListViewModel">
-                    <NavigationViewItem.Icon>
-                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xEA40;" />
+                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xe7ee;"/>
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
             </NavigationView.MenuItems>

@@ -63,6 +63,18 @@ public partial class ServerActionDialog : Form
                 messageLabel.Text = "Any2Remote 正在终止后台服务...";
                 StopServer();
                 break;
+            case "logoff":
+                if (StartupArgs.Length != 4)
+                    throw new ArgumentException("Expected 4 arguments for 'logoff' action");
+                messageLabel.Text = $"Any2Remote 正在注销位于 {StartupArgs[3]} 的用户会话...";
+                HimuRdpServices.LogoffSession(uint.Parse(StartupArgs[2]), true);
+                break;
+            case "disconnect":
+                messageLabel.Text = $"Any2Remote 正在断开位于 {StartupArgs[3]} 的用户会话的连接...";
+                if (StartupArgs.Length != 4)
+                    throw new ArgumentException("Expected 4 arguments for 'disconnect' action");
+                HimuRdpServices.DisconnectSession(uint.Parse(StartupArgs[2]), true);
+                break;
             default:
                 throw new ArgumentException(StartupArgs[1]);
         }

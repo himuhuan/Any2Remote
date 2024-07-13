@@ -8,6 +8,7 @@ using Any2Remote.Windows.AdminClient.Services;
 using Any2Remote.Windows.AdminClient.ViewModels;
 using Any2Remote.Windows.AdminClient.Views;
 using Any2Remote.Windows.Grpc.Services;
+
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.UI.Xaml;
@@ -56,11 +57,10 @@ public partial class App : Application
 
             // Other Activation Handlers
 
-            // Services
+            // Core Services
             services.AddSingleton<ILocalSettingsService, LocalSettingsService>();
             services.AddSingleton<IThemeSelectorService, ThemeSelectorService>();
             services.AddTransient<INavigationViewService, NavigationViewService>();
-
             services.AddSingleton<IActivationService, ActivationService>();
             services.AddSingleton<IPageService, PageService>();
             services.AddSingleton<INavigationService, NavigationService>();
@@ -72,10 +72,12 @@ public partial class App : Application
             });
             services.AddSingleton<IFileService, FileService>();
             services.AddSingleton<ILocalService, LocalWindowsService>();
-            services.AddSingleton<IRdpService, RdpServiceHelper>();
+            services.AddSingleton<IRdpService, RdpServiceProvider>();
             services.AddSingleton<ICoreServerClient, CoreServerClient>();
 
             // Views and ViewModels
+            services.AddTransient<TermsrvSessionViewModel>();
+            services.AddTransient<TermsrvSessionPage>();
             services.AddTransient<EditRemoteAppViewModel>();
             services.AddTransient<EditRemoteAppPage>();
             services.AddTransient<InstalledAppsListViewModel>();

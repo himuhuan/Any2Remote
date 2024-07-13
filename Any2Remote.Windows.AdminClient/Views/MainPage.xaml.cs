@@ -54,4 +54,14 @@ public sealed partial class MainPage : Page
             ViewModel.RunningTask = false;
         }
     }
+
+    private void NavToRemoteAppBtn_Click(object sender, RoutedEventArgs e)
+    {
+        Frame.Navigate(typeof(RemoteAppPage));
+    }
+
+    private void NavToSessionBtn_Click(object sender, RoutedEventArgs e)
+    {
+        Frame.Navigate(typeof(TermsrvSessionPage));
+    }
 }

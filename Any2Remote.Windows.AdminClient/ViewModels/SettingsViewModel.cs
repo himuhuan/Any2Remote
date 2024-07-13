@@ -35,6 +35,7 @@ public partial class SettingsViewModel : ObservableRecipient
         _versionDescription = GetVersionDescription();
 
         SwitchThemeCommand = new RelayCommand<ElementTheme>(
+            // ReSharper disable once AsyncVoidLambda
             async (param) =>
             {
                 if (ElementTheme != param)
@@ -52,7 +53,6 @@ public partial class SettingsViewModel : ObservableRecipient
         if (RuntimeHelper.IsMSIX)
         {
             var packageVersion = Package.Current.Id.Version;
-
             version = new(packageVersion.Major, packageVersion.Minor, packageVersion.Build, packageVersion.Revision);
         }
         else

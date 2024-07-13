@@ -11,7 +11,9 @@ using TimeoutException = System.TimeoutException;
 using Windows.Win32.Security;
 using Microsoft.Win32.SafeHandles;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using Windows.Win32.Foundation;
+using Windows.Win32.System.RemoteDesktop;
 
 namespace HimuRdp.Core;
 
@@ -351,6 +353,74 @@ public class HimuRdpServices
         RestoreWow64Redirection();
     }
 
+    // ReSharper disable once InconsistentNaming
+    private static readonly HANDLE WTS_CURRENT_SERVER_HANDLE = HANDLE.Null;
+
+    public static List<TermsrvSession> GetTermsrvSessions()
+    {
+        unsafe
+        {
+            WTS_SESSION_INFOW* sessionsInfo = null;
+            PWSTR buffer = new PWSTR(null);
+            try
+            {
+                if (!PInvoke.WTSEnumerateSessions(WTS_CURRENT_SERVER_HANDLE, 0, 1, out sessionsInfo,
+                    out var count))
+                {
+                    throw new Win32Exception(Marshal.GetLastWin32Error(), "WTSEnumerateSessions failed.");
+                }
+                List<TermsrvSession> sessions = new();
+                for (uint i = 0; i < count; ++i)
+                {
+                    uint sessionId = sessionsInfo[i].SessionId;
+                    // Skip the console and services session, local session
+                    if (sessionId is < 2 or >= 65536)
+                        continue;
+                    TermsrvSession session = new()
+                    {
+                        WinStationName = sessionsInfo[i].pWinStationName.ToString(),
+                        SessionId = sessionsInfo[i].SessionId,
+                        Status = (SessionConnectStatus) sessionsInfo[i].State
+                    };
+
+                    if (session.Status == SessionConnectStatus.Active)
+                    {
+                        if (!PInvoke.WTSQuerySessionInformation(WTS_CURRENT_SERVER_HANDLE, sessionId,
+                            WTS_INFO_CLASS.WTSSessionInfo, out buffer, out _))
+                            throw new Win32Exception(Marshal.GetLastWin32Error(), "WTSQuerySessionInformation failed.");
+                        WTSINFOW *info = (WTSINFOW*) buffer.Value;
+                        session.UserName = info->UserName.ToString();
+                        session.Domain = info->Domain.ToString();
+                        session.ConnectTime = DateTime.FromFileTime(info->ConnectTime);
+                        PInvoke.WTSFreeMemory(buffer.Value);
+                        if (!PInvoke.WTSQuerySessionInformation(WTS_CURRENT_SERVER_HANDLE, sessionId,
+                                WTS_INFO_CLASS.WTSClientAddress, out buffer, out _))
+                            throw new Win32Exception(Marshal.GetLastWin32Error(), "WTSQuerySessionInformation failed.");
+                        WTS_CLIENT_ADDRESS *address = (WTS_CLIENT_ADDRESS *) buffer.Value;
+                        session.Address = ConvertRawBytesToIpAddress(address);
+                    }
+                    sessions.Add(session);
+                }
+                return sessions.ToList();
+            }
+            finally
+            {
+                PInvoke.WTSFreeMemory(sessionsInfo);
+                PInvoke.WTSFreeMemory(buffer.Value);
+            }
+        }
+    }
+
+    public static bool LogoffSession(long sessionId, bool wait)
+    {
+        return PInvoke.WTSLogoffSession(WTS_CURRENT_SERVER_HANDLE, (uint) sessionId, wait);
+    }
+
+    public static bool DisconnectSession(long sessionId, bool wait)
+    {
+        return PInvoke.WTSDisconnectSession(WTS_CURRENT_SERVER_HANDLE, (uint) sessionId, wait);
+    }
+
     #region Private Methods & Properties
 
     private static readonly RegistryKey LocalMachineRegister = (Is64BitOperatingSystem)
@@ -442,6 +512,19 @@ public class HimuRdpServices
         }
 
         return code;
+    }
+
+    [SuppressMessage("ReSharper", "InconsistentNaming")]
+    private static unsafe string ConvertRawBytesToIpAddress(WTS_CLIENT_ADDRESS* address)
+    {
+        const uint AF_INET = 2, AF_INET6 = 23;
+        return address->AddressFamily switch
+        {
+            AF_INET => $"{address->Address[2]}.{address->Address[3]}.{address->Address[4]}.{address->Address[5]}",
+            AF_INET6 =>
+                $"{address->Address[2]:X2}{address->Address[3]:X2}:{address->Address[4]:X2}{address->Address[5]:X2}:{address->Address[6]:X2}{address->Address[7]:X2}:{address->Address[8]:X2}{address->Address[9]:X2}:{address->Address[10]:X2}{address->Address[11]:X2}:{address->Address[12]:X2}{address->Address[13]:X2}:{address->Address[14]:X2}{address->Address[15]:X2}",
+            _ => string.Empty
+        };
     }
 
     #endregion

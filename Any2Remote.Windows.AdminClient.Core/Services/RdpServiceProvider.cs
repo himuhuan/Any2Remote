@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using System.ServiceProcess;
 using Any2Remote.Windows.AdminClient.Core.Contracts.Services;
+using Any2Remote.Windows.AdminClient.Core.Helpers;
 using Any2Remote.Windows.Shared.Helpers;
 using Any2Remote.Windows.Shared.Models;
 using HimuRdp.Core;
@@ -8,7 +9,7 @@ using Microsoft.Win32;
 
 namespace Any2Remote.Windows.AdminClient.Core.Services;
 
-public class RdpServiceHelper : IRdpService
+public class RdpServiceProvider : IRdpService
 {
     public ServiceStatusInfo GetServiceStatus()
     {
@@ -40,6 +41,25 @@ public class RdpServiceHelper : IRdpService
         }
         result.Status |= ServiceStatus.InstalledEnhanceMode;
         return result;
+    }
+
+    public List<TermsrvSession> GetTermsrvSessions()
+    {
+        return HimuRdpServices.GetTermsrvSessions();
+    }
+
+    public void LogoffSession(TermsrvSession session)
+    {
+        // Administrator privilege required
+        AdminRunnerHelper.StartRunner("server", "logoff", session.SessionId.ToString(), 
+            session.Address == string.Empty ? "未知IP" : session.Address);
+    }
+
+    public void DisconnectSession(TermsrvSession session)
+    {
+        // Administrator privilege required
+        AdminRunnerHelper.StartRunner("server", "disconnect", session.SessionId.ToString(), 
+            session.Address == string.Empty ? "未知IP" : session.Address);
     }
 
     private static ServiceStatus GetServerStatus()

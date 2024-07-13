@@ -1,8 +1,7 @@
-﻿using Grpc.Net.Client;
-using Any2Remote.Windows.Grpc.Services;
+﻿using HimuRdp.Core;
 
-var channel = GrpcChannel.ForAddress("https://localhost:7133");
-var client = new Local.LocalClient(channel);
-var response = client.GetLocalApps(new LocalAppsRequest { IncludeSystemComponent = false});
-
-Console.WriteLine(response.Apps.Count);
+var sessions = HimuRdpServices.GetTermsrvSessions();
+foreach (var session in sessions)
+{
+    Console.WriteLine(session);
+}

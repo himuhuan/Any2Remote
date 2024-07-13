@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<Page
+    x:Class="Any2Remote.Windows.AdminClient.Views.TermsrvSessionPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:Any2Remote.Windows.AdminClient.Core.Models"
+    mc:Ignorable="d">
+    <Page.Resources>
+        <DataTemplate x:Key="TsSessionListViewTemplate" x:DataType="models:TsSessionModel">
+            <Expander HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
+                <Expander.Header>
+                    <Grid Padding="5" ColumnSpacing="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="48" />
+                            <ColumnDefinition Width="9*" />
+                            <ColumnDefinition Width="auto" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="48" />
+                        </Grid.RowDefinitions>
+                        <FontIcon FontSize="32" Glyph="&#xE8AF;"
+                                  Foreground="{StaticResource TextFillColorPrimaryBrush}" />
+                        <StackPanel Orientation="Vertical" Grid.Column="1" VerticalAlignment="Center">
+                            <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}"
+                                       Text="{x:Bind FullAddress, Mode=OneWay}" />
+                            <TextBlock Style="{StaticResource BodyTextBlockStyle}"
+                                       TextWrapping="Wrap"
+                                       Text="{x:Bind FullUserName, Mode=OneWay}" />
+                        </StackPanel>
+                        <StackPanel Grid.Column="2" Spacing="5" Orientation="Horizontal">
+                            <Button x:Name="TerminateConnectionBtn" Click="TerminateConnectionBtn_Click">注销</Button>
+                            <Button x:Name="DisconnectBtn" Click="DisconnectBtn_Click">断开连接</Button>
+                        </StackPanel>
+                    </Grid>
+                </Expander.Header>
+                <Expander.Content>
+                    <StackPanel Spacing="10">
+                        <Grid ColumnDefinitions="3*, *">
+                            <TextBlock Grid.Column="0" Style="{StaticResource BodyTextBlockStyle}" Text="状态：" />
+                            <TextBlock Grid.Column="1" Style="{StaticResource BodyTextBlockStyle}"
+                                       Text="{x:Bind StatusString, Mode=OneWay}" />
+                        </Grid>
+                        <Grid ColumnDefinitions="3*, *">
+                            <TextBlock Grid.Column="0" Style="{StaticResource BodyTextBlockStyle}" Text="用户：" />
+                            <TextBlock Grid.Column="1" Style="{StaticResource BodyTextBlockStyle}"
+                                       Text="{x:Bind UserName, Mode=OneWay}" />
+                        </Grid>
+                        <Grid ColumnDefinitions="3*, *">
+                            <TextBlock Grid.Column="0" Style="{StaticResource BodyTextBlockStyle}" Text="连接名:" />
+                            <TextBlock Grid.Column="1" Style="{StaticResource BodyTextBlockStyle}"
+                                       Text="{x:Bind WinStationName, Mode=OneWay}" />
+                        </Grid>
+                        <Grid ColumnDefinitions="3*, *">
+                            <TextBlock Grid.Column="0" Style="{StaticResource BodyTextBlockStyle}" Text="域:" />
+                            <TextBlock Grid.Column="1" Style="{StaticResource BodyTextBlockStyle}"
+                                       Text="{x:Bind Domain, Mode=OneWay}" />
+                        </Grid>
+                        <Grid ColumnDefinitions="3*, *">
+                            <TextBlock Grid.Column="0" Style="{StaticResource BodyTextBlockStyle}" Text="IP 地址:" />
+                            <TextBlock Grid.Column="1" Style="{StaticResource BodyTextBlockStyle}"
+                                       Text="{x:Bind FullAddress, Mode=OneWay}" />
+                        </Grid>
+                        <Grid ColumnDefinitions="3*, *">
+                            <TextBlock Grid.Column="0" Style="{StaticResource BodyTextBlockStyle}" Text="连接时间" />
+                            <TextBlock Grid.Column="1" Style="{StaticResource BodyTextBlockStyle}"
+                                       Text="{x:Bind ConnectTimeString, Mode=OneWay}" />
+                        </Grid>
+                    </StackPanel>
+                </Expander.Content>
+            </Expander>
+        </DataTemplate>
+    </Page.Resources>
+    <StackPanel x:Name="ContentArea" Spacing="10">
+        <StackPanel Orientation="Vertical" Spacing="5" Visibility="{x:Bind ViewModel.IsDataLoading, Mode=OneWay}">
+            <ProgressBar IsIndeterminate="True" HorizontalAlignment="Stretch" />
+            <TextBlock> 正在查询远程桌面连接的信息...</TextBlock>
+        </StackPanel>
+        <TextBlock Visibility="{x:Bind ViewModel.NoSessionInHost, Mode=OneWay}"> 没有任何远程连接连接到当前设备。</TextBlock>
+        <ListView
+            x:Name="TsSessionListView"
+            ItemTemplate="{StaticResource TsSessionListViewTemplate}"
+            ItemsSource="{x:Bind ViewModel.Sessions}"
+            IsItemClickEnabled="False"
+            SelectionMode="None"
+            HorizontalAlignment="Stretch" />
+    </StackPanel>
+</Page>

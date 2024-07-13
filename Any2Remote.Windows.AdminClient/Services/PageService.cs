@@ -21,6 +21,7 @@ public class PageService : IPageService
         Configure<PublishRemoteAppViewModel, PublishRemoteAppPage>();
         Configure<InstalledAppsListViewModel, InstalledAppsListPage>();
         Configure<EditRemoteAppViewModel, EditRemoteAppPage>();
+        Configure<TermsrvSessionViewModel, TermsrvSessionPage>();
     }
 
     public Type GetPageType(string key)

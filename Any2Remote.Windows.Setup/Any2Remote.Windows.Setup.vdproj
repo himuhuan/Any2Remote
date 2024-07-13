@@ -21,7 +21,13 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_43EAF125166241D0A5C7C657170E152A"
+        "MsmKey" = "8:_5B9BF5AD14CF417FB297A3FDAADB319D"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_93BE0396AE9749C9B40EF53977206B43"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -142,9 +148,29 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_43EAF125166241D0A5C7C657170E152A"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_5B9BF5AD14CF417FB297A3FDAADB319D"
             {
-            "SourcePath" = "8:..\\Any2Remote.Windows.AdminClient\\bin\\x64\\Release\\net6.0-windows10.0.18362.0\\win10-x64\\Any2Remote.Windows.AdminClient.pri"
+            "SourcePath" = "8:..\\Any2Remote.Windows.AdminClient\\Assets\\Icons\\installer-banner.jpg"
+            "TargetName" = "8:installer-banner.jpg"
+            "Tag" = "8:"
+            "Folder" = "8:_82D8564E0A8C48DBAD321E95D3FC4021"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_93BE0396AE9749C9B40EF53977206B43"
+            {
+            "SourcePath" = "8:..\\Any2Remote.Windows.AdminClient\\bin\\x64\\Release\\net6.0-windows10.0.18362.0\\Any2Remote.Windows.AdminClient.pri"
             "TargetName" = "8:Any2Remote.Windows.AdminClient.pri"
             "Tag" = "8:"
             "Folder" = "8:_82D8564E0A8C48DBAD321E95D3FC4021"
@@ -219,7 +245,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Any2Remote Manager"
         "ProductCode" = "8:{9A0E089A-80BD-43F9-8AF2-E1F3A72D997F}"
-        "PackageCode" = "8:{975CA62E-5B93-46BA-811F-1513D3DCF7DF}"
+        "PackageCode" = "8:{5D118DC3-8133-4F02-8F4D-E6C1034CA058}"
         "UpgradeCode" = "8:{D95A6614-9943-4619-97EE-C00F7E53443C}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
@@ -394,7 +420,8 @@
                             "Type" = "3:8"
                             "ContextData" = "8:Bitmap"
                             "Attributes" = "3:4"
-                            "Setting" = "3:1"
+                            "Setting" = "3:2"
+                            "Value" = "8:_5B9BF5AD14CF417FB297A3FDAADB319D"
                             "UsePlugInResources" = "11:TRUE"
                             }
                             "ShowProgress"
@@ -545,7 +572,8 @@
                             "Type" = "3:8"
                             "ContextData" = "8:Bitmap"
                             "Attributes" = "3:4"
-                            "Setting" = "3:1"
+                            "Setting" = "3:2"
+                            "Value" = "8:_5B9BF5AD14CF417FB297A3FDAADB319D"
                             "UsePlugInResources" = "11:TRUE"
                             }
                         }
@@ -576,7 +604,8 @@
                             "Type" = "3:8"
                             "ContextData" = "8:Bitmap"
                             "Attributes" = "3:4"
-                            "Setting" = "3:1"
+                            "Setting" = "3:2"
+                            "Value" = "8:_5B9BF5AD14CF417FB297A3FDAADB319D"
                             "UsePlugInResources" = "11:TRUE"
                             }
                             "CopyrightWarning"
@@ -587,8 +616,8 @@
                             "Type" = "3:3"
                             "ContextData" = "8:"
                             "Attributes" = "3:0"
-                            "Setting" = "3:1"
-                            "Value" = "8:#1202"
+                            "Setting" = "3:2"
+                            "Value" = "8:此应用为2024年软件杯A8赛题参赛作品，由小组 以上队伍全部无效 设计制作。"
                             "DefaultValue" = "8:#1202"
                             "UsePlugInResources" = "11:TRUE"
                             }
@@ -600,8 +629,8 @@
                             "Type" = "3:3"
                             "ContextData" = "8:"
                             "Attributes" = "3:0"
-                            "Setting" = "3:1"
-                            "Value" = "8:#1203"
+                            "Setting" = "3:2"
+                            "Value" = "8:欢迎使用Any2Remote国产操作系统融合应用的Windows管理端。此应用会引导您完成进一步的配置，实现在国产操作系统上对Windows原生应用的无缝流转。"
                             "DefaultValue" = "8:#1203"
                             "UsePlugInResources" = "11:TRUE"
                             }
@@ -624,7 +653,8 @@
                             "Type" = "3:8"
                             "ContextData" = "8:Bitmap"
                             "Attributes" = "3:4"
-                            "Setting" = "3:1"
+                            "Setting" = "3:2"
+                            "Value" = "8:_5B9BF5AD14CF417FB297A3FDAADB319D"
                             "UsePlugInResources" = "11:TRUE"
                             }
                             "InstallAllUsersVisible"
@@ -659,7 +689,8 @@
                             "Type" = "3:8"
                             "ContextData" = "8:Bitmap"
                             "Attributes" = "3:4"
-                            "Setting" = "3:1"
+                            "Setting" = "3:2"
+                            "Value" = "8:_5B9BF5AD14CF417FB297A3FDAADB319D"
                             "UsePlugInResources" = "11:TRUE"
                             }
                         }
@@ -696,7 +727,8 @@
                             "Type" = "3:8"
                             "ContextData" = "8:Bitmap"
                             "Attributes" = "3:4"
-                            "Setting" = "3:1"
+                            "Setting" = "3:2"
+                            "Value" = "8:_5B9BF5AD14CF417FB297A3FDAADB319D"
                             "UsePlugInResources" = "11:TRUE"
                             }
                             "UpdateText"
@@ -740,7 +772,8 @@
                             "Type" = "3:8"
                             "ContextData" = "8:Bitmap"
                             "Attributes" = "3:4"
-                            "Setting" = "3:1"
+                            "Setting" = "3:2"
+                            "Value" = "8:_5B9BF5AD14CF417FB297A3FDAADB319D"
                             "UsePlugInResources" = "11:TRUE"
                             }
                             "ShowProgress"
@@ -768,7 +801,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_7FDA0029EDBF44C797814274A07F1CBA"
             {
-            "SourcePath" = "8:..\\Any2Remote.Windows.AdminClient\\obj\\x64\\Release\\net6.0-windows10.0.18362.0\\win10-x64\\apphost.exe"
+            "SourcePath" = "8:..\\Any2Remote.Windows.AdminClient\\obj\\x64\\Release\\net6.0-windows10.0.18362.0\\apphost.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_82D8564E0A8C48DBAD321E95D3FC4021"

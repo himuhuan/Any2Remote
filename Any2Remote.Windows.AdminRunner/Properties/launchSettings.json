@@ -31,6 +31,10 @@
     "config-enhance-mode": {
       "commandName": "Project",
       "commandLineArgs": "config-enhance-mode \"%ProgramFiles%\\RDP Wrapper\""
+    },
+    "logoff": {
+      "commandName": "Project",
+      "commandLineArgs": "server logoff 15 192.168.11.1"
     }
   }
 }
