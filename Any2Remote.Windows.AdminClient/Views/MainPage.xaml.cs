@@ -28,6 +28,7 @@ public sealed partial class MainPage : Page
         ViewModel.RunningTask = true;
         try
         {
+#if DEBUG
             if (ViewModel.Status.CanStartService)
             {
                 ContentDialog dialog = new()
@@ -48,6 +49,9 @@ public sealed partial class MainPage : Page
             {
                 ViewModel.ExecuteServerAction(devMode: false);
             }
+#else
+            ViewModel.ExecuteServerAction(devMode: false);
+#endif
         }
         finally
         {
