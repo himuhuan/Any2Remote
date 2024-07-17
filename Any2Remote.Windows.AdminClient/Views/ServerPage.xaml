@@ -131,34 +131,6 @@
                           Grid.Column="2" />
             </Grid>
         </Button>
-        <TextBlock Text="Internet Explorer 支持" Style="{StaticResource BodyStrongTextBlockStyle}" />
-        <TextBlock Text="Internet Explorer 已于 2022 年 6 月 15 日停用。Any2Remote 内置了对于强制启用 Internet Explorer 的支持" />
-        <Button
-            x:Name="EnableInternetExplorerBtn"
-            HorizontalAlignment="Stretch"
-            VerticalAlignment="Stretch"
-            HorizontalContentAlignment="Stretch"
-            Padding="15"
-            Click="EnableInternetExplorerBtn_Click">
-            <Grid ColumnSpacing="20">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="0.5*" />
-                    <ColumnDefinition Width="10*" />
-                    <ColumnDefinition Width="0.5*" />
-                </Grid.ColumnDefinitions>
-                <Image Width="25" Height="25" Source="/Assets/Icons/internet-explorer.svg">
-
-                </Image>
-                <StackPanel Orientation="Vertical" Grid.Column="1">
-                    <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}"
-                               Text="启用 Internet Explorer 支持" />
-                    <TextBlock Style="{StaticResource BodyTextBlockStyle}"
-                               Text="修改 Windows 系统文件，强制启用 Internet Explorer。" />
-                </StackPanel>
-                <FontIcon FontSize="10" Glyph="&#xE76C;" Foreground="{StaticResource TextFillColorPrimaryBrush}"
-                          Grid.Column="2" />
-            </Grid>
-        </Button>
         <TextBlock Text="重置选项" Style="{StaticResource BodyStrongTextBlockStyle}" />
         <Button
             HorizontalAlignment="Stretch"

@@ -4,7 +4,6 @@ using Any2Remote.Windows.AdminClient.ViewModels;
 using Microsoft.AspNetCore.SignalR.Client;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Windows.ApplicationModel.DataTransfer;
 
 
 namespace Any2Remote.Windows.AdminClient.Views;
