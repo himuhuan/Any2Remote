@@ -353,3 +353,4 @@ FodyWeavers.xsd
 
 Any2Remote.Windows.AdminClient/Assets/AdminRunner/
 Any2Remote.Windows.AdminClient/Assets/Any2RemoteServer/
+/Any2Remote.Setup.exe
