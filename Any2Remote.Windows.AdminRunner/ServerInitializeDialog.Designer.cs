@@ -165,6 +165,7 @@
             Name = "ServerInitializeDialog";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "创建 Any2Remote Server 证书";
+            Load += ServerInitializeDialog_Load;
             ((System.ComponentModel.ISupportInitialize) pictureBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();

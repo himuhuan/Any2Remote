@@ -7,37 +7,18 @@ namespace Any2Remote.Windows.AdminRunner;
 
 public partial class ServerInitializeDialog : Form
 {
-    public ServerInitializeDialog()
+    public readonly string? CertificatePassword;
+
+    public ServerInitializeDialog(string? certificatePassword = null)
     {
         InitializeComponent();
+        CertificatePassword = certificatePassword;
     }
 
-    private async void buttonCreateCert_Click(object sender, EventArgs e)
+    private void buttonCreateCert_Click(object sender, EventArgs e)
     {
-        buttonCreateCert.Enabled = false;
-        progressBar1.Style = ProgressBarStyle.Marquee;
-        progressBar1.MarqueeAnimationSpeed = 30;
-        progressBar1.Visible = true;
-        labelTips.Visible = true;
+        Initialize();
 
-        try
-        {
-            using PowerShell shell = PowerShell.Create();
-            string thumbprint = await CreateSelfSignedCertificate(shell);
-            string certificatePath = await ExportCertificate(shell, thumbprint);
-            await InstallCertificate(shell, certificatePath);
-            await ExportCertificateInfo(certificatePath);
-            Environment.Exit(0);
-        }
-        catch (Exception ex)
-        {
-            MessageBox.Show(
-                $"{ex.Source} 报告了一个致命错误，操作已被终止。\n\n {ex.Message}:\n {ex.StackTrace}",
-                "发生致命错误",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Stop);
-            Environment.Exit(1);
-        }
     }
 
     private async Task<string> CreateSelfSignedCertificate(PowerShell shell)
@@ -107,5 +88,43 @@ public partial class ServerInitializeDialog : Form
         string exportPath = Path.Combine(WindowsCommon.Any2RemoteAppDataFolder, "certificate.json");
         await using FileStream createStream = File.Create(exportPath);
         await JsonSerializer.SerializeAsync(createStream, objectToExport);
+    }
+
+    private void ServerInitializeDialog_Load(object sender, EventArgs e)
+    {
+        if (CertificatePassword != null)
+        {
+            certPassword.Text = CertificatePassword;
+            certPassword.Enabled = false;
+            Initialize();
+        }
+    }
+
+    private async void Initialize()
+    {
+        buttonCreateCert.Enabled = false;
+        progressBar1.Style = ProgressBarStyle.Marquee;
+        progressBar1.MarqueeAnimationSpeed = 30;
+        progressBar1.Visible = true;
+        labelTips.Visible = true;
+
+        try
+        {
+            using PowerShell shell = PowerShell.Create();
+            string thumbprint = await CreateSelfSignedCertificate(shell);
+            string certificatePath = await ExportCertificate(shell, thumbprint);
+            await InstallCertificate(shell, certificatePath);
+            await ExportCertificateInfo(certificatePath);
+            Environment.Exit(0);
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(
+                $"{ex.Source} 报告了一个致命错误，操作已被终止。\n\n {ex.Message}:\n {ex.StackTrace}",
+                "发生致命错误",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Stop);
+            Environment.Exit(1);
+        }
     }
 }

@@ -64,7 +64,6 @@
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 			<CopyToPublishDirectory>Always</CopyToPublishDirectory>
 		</Content>
-		<Folder Include="Models\" />
 		<None Remove="Views\DialogContent\ChoosePossibleLocalAppDialogContent.xaml" />
 	</ItemGroup>
 

@@ -6,6 +6,7 @@ using Any2Remote.Windows.Shared.Exceptions;
 using Any2Remote.Windows.Shared.Helpers;
 using Any2Remote.Windows.Shared.Models;
 using HimuRdp.Core;
+using System.Management.Automation.Runspaces;
 
 namespace Any2Remote.Windows.AdminRunner;
 
@@ -29,12 +30,12 @@ public partial class ServerActionDialog : Form
         switch (StartupArgs[1])
         {
             case "init":
-                SetServerRegisterKey();
+                ConfigureCommonServices();
                 messageLabel.Text = "Any2Remote 正在配置 Microsoft Windows ...";
                 break;
             case "startup":
                 messageLabel.Text = "Any2Remote 正在配置 Microsoft Windows ...";
-                SetServerRegisterKey();
+                ConfigureCommonServices();
                 ServerInitializeDialog dialog = new();
                 dialog.ShowDialog();
                 dialog.Dispose();
@@ -75,6 +76,22 @@ public partial class ServerActionDialog : Form
                     throw new ArgumentException("Expected 4 arguments for 'disconnect' action");
                 HimuRdpServices.DisconnectSession(uint.Parse(StartupArgs[2]), true);
                 break;
+            case "click-once":
+                if (StartupArgs.Length != 3)
+                    throw new ArgumentException("Expected 3 arguments for 'click-once' action");
+                await Task.Run(() =>
+                {
+                    ConfigureCommonServices();
+                    InstallEnhanceMode();
+                    Invoke(() =>
+                    {
+                        messageLabel.Text = "Any2Remote 正在配置证书服务...";
+                    });
+                    ServerInitializeDialog certDialog = new(StartupArgs[2]);
+                    certDialog.ShowDialog();
+                    certDialog.Dispose();
+                });
+                break;
             default:
                 throw new ArgumentException(StartupArgs[1]);
         }
@@ -83,7 +100,7 @@ public partial class ServerActionDialog : Form
         Environment.Exit(0);
     }
 
-    private static void SetServerRegisterKey(bool setServer = true)
+    private static void ConfigureCommonServices(bool setServer = true)
     {
         var key = Registry.LocalMachine.OpenSubKey(@"SYSTEM\CurrentControlSet\Control\Terminal Server", true);
         var remoteAppKey = Registry.LocalMachine.OpenSubKey(
@@ -99,6 +116,8 @@ public partial class ServerActionDialog : Form
         {
             key.SetValue("fDenyTSConnections", setServer ? 0 : 1, RegistryValueKind.DWord);
             remoteAppKey.SetValue("fDisabledAllowList", (setServer) ? 1 : 0, RegistryValueKind.DWord);
+            AddFirewallRule("7132", "Any2Remote HTTPS", "TCP");
+            AddFirewallRule("7131", "Any2Remote HTTP", "TCP");
         }
         catch (Exception e)
         {
@@ -177,6 +196,28 @@ public partial class ServerActionDialog : Form
         Start(path, true);
     }
 
+    private void InstallEnhanceMode()
+    {
+        HimuRdpServices installService = new();
+        Invoke(() => messageLabel.Text = "Any2Remote 正在安装服务，请勿关闭计算机...");
+
+        installService.Install();
+        HimuRdpServices.ConfigureTermsrvDependenciesServices();
+        HimuRdpServices.ConfigureTermsrvRegister(true);
+        HimuRdpServices.ConfigureTermsrvFirewall(true);
+        ServiceController? service = HimuRdpServices.GetTermsrvServiceController();
+        if (service == null)
+            throw new Any2RemoteException("此计算机上 Windows 可能缺少关键的系统文件，Any2Remote 无法启动 Termsrv 服务");
+        if (service.Status == ServiceControllerStatus.Running)
+        {
+            service.Stop();
+            service.WaitForStatus(ServiceControllerStatus.Stopped, TimeSpan.FromSeconds(5));
+            service.StartServiceWithDepends();
+            service.ConfigureStartMode(ServiceStartMode.Automatic);
+        }
+        Task.Delay(5000).Wait();
+    }
+
     private enum ItemClearType
     {
         Register = 0,
@@ -197,7 +238,7 @@ public partial class ServerActionDialog : Form
     private static void ResetAll()
     {
         StopServer();
-        SetServerRegisterKey(false);
+        ConfigureCommonServices(false);
         foreach (var item in ItemToClear)
         {
             switch (item.Key)
@@ -237,5 +278,20 @@ public partial class ServerActionDialog : Form
                     throw new ArgumentOutOfRangeException();
             }
         }
+    }
+
+    private static void AddFirewallRule(string port, string name, string protocol)
+    {
+        string ruleName = $"Allow {name} on port {port}";
+        string netshCommand = $"netsh advfirewall firewall add rule name=\"{ruleName}\" dir=in action=allow protocol={protocol} localport={port}";
+        ProcessStartInfo startInfo = new()
+        {
+            WindowStyle = ProcessWindowStyle.Hidden,
+            FileName = "cmd.exe",
+            Arguments = $"/c {netshCommand}",
+            UseShellExecute = false,
+            CreateNoWindow = true
+        };
+        Process.Start(startInfo)?.WaitForExit();
     }
 }

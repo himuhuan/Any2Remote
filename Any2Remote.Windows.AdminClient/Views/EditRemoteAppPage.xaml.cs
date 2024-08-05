@@ -31,6 +31,7 @@ public sealed partial class EditRemoteAppPage : Page
         // base.OnNavigatedTo(e);
         ContentPanel.Visibility = Visibility.Collapsed;
         LoadingPanel.Visibility = Visibility.Visible;
+
         switch (e.Parameter)
         {
             case RemoteApplication applicationToEdit:
@@ -39,8 +40,21 @@ public sealed partial class EditRemoteAppPage : Page
             case LocalApplicationShowModel model:
                 OnInitializeAsync(model);
                 break;
+            case RemoteApplicationNavigationArg arg:
+                if (arg.SkipEdit)
+                {
+                    ViewModel.RemoteApplication = new RemoteApplicationListModel(arg.RemoteApplication);
+                    PublishUiTask();
+                }
+                else
+                {
+                    OnInitializeAsync(arg.RemoteApplication);
+                }
+                break;
+            case LocalApplicationNavigationArg arg:
+                OnInitializeAsync(arg.LocalApplication, arg.SkipEdit);
+                break;
             default:
-            {
                 ContentDialog errorDialog = new()
                 {
                     Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style,
@@ -53,7 +67,6 @@ public sealed partial class EditRemoteAppPage : Page
                 await errorDialog.ShowAsync();
                 Frame.Navigate(typeof(MainPage));
                 break;
-            }
         }
 
     }
@@ -107,6 +120,7 @@ public sealed partial class EditRemoteAppPage : Page
                 {
                     ViewModel.RemoteApplication = new RemoteApplicationListModel(applicationToEdit);
                 });
+
             }
 
             DispatcherQueue.TryEnqueue(DispatcherQueuePriority.High, () =>
@@ -118,15 +132,19 @@ public sealed partial class EditRemoteAppPage : Page
     }
 
     // publish from local app
-    private async void OnInitializeAsync(LocalApplicationShowModel localApplicationModel)
+    private async void OnInitializeAsync(LocalApplicationShowModel localApplicationModel, bool skipEdit = false)
     {
         var lnkFilePaths = await _service.GetStartMenuLnkNamesAsync(localApplicationModel.RawInfo);
         DispatcherQueue.TryEnqueue(() =>
         {
             if (lnkFilePaths.Count > 0)
             {
-                ViewModel.RemoteApplication = new RemoteApplicationListModel(localApplicationModel, 
+                ViewModel.RemoteApplication = new RemoteApplicationListModel(localApplicationModel,
                     WindowsCommon.GetApplicationInfoFromInk(lnkFilePaths.First())!);
+                if (skipEdit)
+                {
+                    PublishUiTask();
+                }
             }
             else
             {

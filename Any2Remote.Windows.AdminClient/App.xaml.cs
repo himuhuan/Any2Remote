@@ -12,6 +12,7 @@ using Any2Remote.Windows.Grpc.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 
 namespace Any2Remote.Windows.AdminClient;
 
@@ -103,9 +104,17 @@ public partial class App : Application
         UnhandledException += App_UnhandledException;
     }
 
-    private void App_UnhandledException(object sender, Microsoft.UI.Xaml.UnhandledExceptionEventArgs e)
+    private async void App_UnhandledException(object sender, Microsoft.UI.Xaml.UnhandledExceptionEventArgs e)
     {
-        Console.WriteLine(e.Exception);
+        var dialog = new ContentDialog
+        {
+            Title = "内部错误",
+            Content = $"Any2Remote 内部发生了错误。你请求的操作可能未完成或已失败。\n\n " +
+            $"错误信息:\n\n{e.Message}\n\n请重试或联系支持。",
+            CloseButtonText = "确定",
+            XamlRoot = MainWindow.Content.XamlRoot,
+        };
+        await dialog.ShowAsync();
     }
 
     protected override async void OnLaunched(LaunchActivatedEventArgs args)

@@ -18,12 +18,11 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "解决方案项", "解决方案项", "{F11E91D6-0F64-47EE-9889-85E810D6FCEF}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
+		installer.nsi = installer.nsi
 		PreBuildAdminClient.bat = PreBuildAdminClient.bat
 	EndProjectSection
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Any2Remote.Windows.Setup", "Any2Remote.Windows.Setup\Any2Remote.Windows.Setup.vdproj", "{8AB3F512-7330-4E08-B2AA-01D56F2ACE40}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Any2Remote.Windows.ApiTest", "Any2Remote.Windows.ApiTest\Any2Remote.Windows.ApiTest.csproj", "{B96C585E-04B6-4508-8147-E8A8EA98D8D5}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Any2Remote.Windows.Shared", "Any2Remote.Windows.Shared\Any2Remote.Windows.Shared.csproj", "{2CCE7234-218B-4313-A461-22F76055FC9C}"
 EndProject
@@ -143,26 +142,6 @@ Global
 		{8AB3F512-7330-4E08-B2AA-01D56F2ACE40}.Release|arm64.ActiveCfg = Release
 		{8AB3F512-7330-4E08-B2AA-01D56F2ACE40}.Release|x64.ActiveCfg = Release
 		{8AB3F512-7330-4E08-B2AA-01D56F2ACE40}.Release|x86.ActiveCfg = Release
-		{B96C585E-04B6-4508-8147-E8A8EA98D8D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B96C585E-04B6-4508-8147-E8A8EA98D8D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B96C585E-04B6-4508-8147-E8A8EA98D8D5}.Debug|ARM.ActiveCfg = Debug|Any CPU
-		{B96C585E-04B6-4508-8147-E8A8EA98D8D5}.Debug|ARM.Build.0 = Debug|Any CPU
-		{B96C585E-04B6-4508-8147-E8A8EA98D8D5}.Debug|arm64.ActiveCfg = Debug|Any CPU
-		{B96C585E-04B6-4508-8147-E8A8EA98D8D5}.Debug|arm64.Build.0 = Debug|Any CPU
-		{B96C585E-04B6-4508-8147-E8A8EA98D8D5}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{B96C585E-04B6-4508-8147-E8A8EA98D8D5}.Debug|x64.Build.0 = Debug|Any CPU
-		{B96C585E-04B6-4508-8147-E8A8EA98D8D5}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{B96C585E-04B6-4508-8147-E8A8EA98D8D5}.Debug|x86.Build.0 = Debug|Any CPU
-		{B96C585E-04B6-4508-8147-E8A8EA98D8D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B96C585E-04B6-4508-8147-E8A8EA98D8D5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B96C585E-04B6-4508-8147-E8A8EA98D8D5}.Release|ARM.ActiveCfg = Release|Any CPU
-		{B96C585E-04B6-4508-8147-E8A8EA98D8D5}.Release|ARM.Build.0 = Release|Any CPU
-		{B96C585E-04B6-4508-8147-E8A8EA98D8D5}.Release|arm64.ActiveCfg = Release|Any CPU
-		{B96C585E-04B6-4508-8147-E8A8EA98D8D5}.Release|arm64.Build.0 = Release|Any CPU
-		{B96C585E-04B6-4508-8147-E8A8EA98D8D5}.Release|x64.ActiveCfg = Release|Any CPU
-		{B96C585E-04B6-4508-8147-E8A8EA98D8D5}.Release|x64.Build.0 = Release|Any CPU
-		{B96C585E-04B6-4508-8147-E8A8EA98D8D5}.Release|x86.ActiveCfg = Release|Any CPU
-		{B96C585E-04B6-4508-8147-E8A8EA98D8D5}.Release|x86.Build.0 = Release|Any CPU
 		{2CCE7234-218B-4313-A461-22F76055FC9C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2CCE7234-218B-4313-A461-22F76055FC9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2CCE7234-218B-4313-A461-22F76055FC9C}.Debug|ARM.ActiveCfg = Debug|Any CPU

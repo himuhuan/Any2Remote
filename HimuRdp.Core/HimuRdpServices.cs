@@ -388,7 +388,7 @@ public class HimuRdpServices
                         if (!PInvoke.WTSQuerySessionInformation(WTS_CURRENT_SERVER_HANDLE, sessionId,
                             WTS_INFO_CLASS.WTSSessionInfo, out buffer, out _))
                             throw new Win32Exception(Marshal.GetLastWin32Error(), "WTSQuerySessionInformation failed.");
-                        WTSINFOW *info = (WTSINFOW*) buffer.Value;
+                        WTSINFOW* info = (WTSINFOW*) buffer.Value;
                         session.UserName = info->UserName.ToString();
                         session.Domain = info->Domain.ToString();
                         session.ConnectTime = DateTime.FromFileTime(info->ConnectTime);
@@ -396,7 +396,7 @@ public class HimuRdpServices
                         if (!PInvoke.WTSQuerySessionInformation(WTS_CURRENT_SERVER_HANDLE, sessionId,
                                 WTS_INFO_CLASS.WTSClientAddress, out buffer, out _))
                             throw new Win32Exception(Marshal.GetLastWin32Error(), "WTSQuerySessionInformation failed.");
-                        WTS_CLIENT_ADDRESS *address = (WTS_CLIENT_ADDRESS *) buffer.Value;
+                        WTS_CLIENT_ADDRESS* address = (WTS_CLIENT_ADDRESS*) buffer.Value;
                         session.Address = ConvertRawBytesToIpAddress(address);
                     }
                     sessions.Add(session);
@@ -462,10 +462,17 @@ public class HimuRdpServices
         // ReSharper disable once UnusedAutoPropertyAccessor.Local
         public bool Writable { get; init; }
 
-        public static RegisterKeyWrapper OpenRegisterKey(string keyPath, bool writable)
+        public static RegisterKeyWrapper OpenRegisterKey(string keyPath, bool writable, bool createIfNotExist = true)
         {
-            var key = LocalMachineRegister.OpenSubKey(keyPath, writable)
-                      ?? throw new InvalidRegisterException(RegistryHive.LocalMachine, keyPath);
+            var key = LocalMachineRegister.OpenSubKey(keyPath, writable);
+            if (key == null)
+            {
+                if (createIfNotExist)
+                    key = LocalMachineRegister.CreateSubKey(keyPath, writable);
+                else
+                    throw new InvalidRegisterException(RegistryHive.LocalMachine, keyPath);
+            }
+
             return new RegisterKeyWrapper(key, writable);
         }
 

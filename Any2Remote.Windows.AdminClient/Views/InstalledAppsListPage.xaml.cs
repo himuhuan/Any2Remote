@@ -94,7 +94,8 @@ public sealed partial class InstalledAppsListPage : Page
     {
         if (((MenuFlyoutItem) sender).DataContext is LocalApplicationShowModel model)
         {
-            Frame.Navigate(typeof(EditRemoteAppPage), model);
+            var arg = new LocalApplicationNavigationArg(model, true);
+            Frame.Navigate(typeof(EditRemoteAppPage), arg);
         }
     }
 }

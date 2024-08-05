@@ -108,29 +108,6 @@
                           Grid.Column="2" />
             </Grid>
         </Button>
-        <Button
-            HorizontalAlignment="Stretch"
-            VerticalAlignment="Stretch"
-            HorizontalContentAlignment="Stretch"
-            Padding="15">
-            <Grid ColumnSpacing="20">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="0.5*" />
-                    <ColumnDefinition Width="10*" />
-                    <ColumnDefinition Width="0.5*" />
-                </Grid.ColumnDefinitions>
-                <FontIcon FontSize="25" Glyph="&#xe7ee;"
-                          Foreground="{StaticResource TextFillColorPrimaryBrush}" />
-                <StackPanel Orientation="Vertical" Grid.Column="1">
-                    <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}"
-                               Text="Any2Remote 客户端连接与用户" />
-                    <TextBlock Style="{StaticResource BodyTextBlockStyle}"
-                               Text="管理用户与客户端的连接" />
-                </StackPanel>
-                <FontIcon FontSize="10" Glyph="&#xE76C;" Foreground="{StaticResource TextFillColorPrimaryBrush}"
-                          Grid.Column="2" />
-            </Grid>
-        </Button>
         <TextBlock Text="重置选项" Style="{StaticResource BodyStrongTextBlockStyle}" />
         <Button
             HorizontalAlignment="Stretch"

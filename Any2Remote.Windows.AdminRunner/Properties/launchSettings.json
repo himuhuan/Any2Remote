@@ -18,7 +18,7 @@
     },
     "startup": {
       "commandName": "Project",
-      "commandLineArgs": "server startup"
+      "commandLineArgs": "server startup liuhuan123"
     },
     "reset": {
       "commandName": "Project",
@@ -35,6 +35,10 @@
     "logoff": {
       "commandName": "Project",
       "commandLineArgs": "server logoff 15 192.168.11.1"
+    },
+    "click-once": {
+      "commandName": "Project",
+      "commandLineArgs": "server click-once liuhuan123"
     }
   }
 }

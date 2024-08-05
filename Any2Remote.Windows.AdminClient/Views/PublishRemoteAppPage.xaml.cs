@@ -7,6 +7,7 @@ using Any2Remote.Windows.Shared.Helpers;
 using Any2Remote.Windows.Shared.Models;
 using Windows.Storage.Pickers;
 using Any2Remote.Windows.AdminClient.Helpers;
+using Any2Remote.Windows.AdminClient.Models;
 
 namespace Any2Remote.Windows.AdminClient.Views;
 
@@ -41,7 +42,29 @@ public sealed partial class PublishRemoteAppPage : Page
             // Get the connection id from the server
         });
 
-        await _hubConnection.StartAsync();
+        try
+        {
+            await _hubConnection.StartAsync();
+        }
+        catch (Exception ex)
+        {
+            ContentDialog dialog = new()
+            {
+                Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style,
+                Title = "连接到远程服务器失败",
+                XamlRoot = XamlRoot,
+                PrimaryButtonText = "好的",
+                DefaultButton = ContentDialogButton.Primary,
+                Content = new TextBlock()
+                {
+                    Text = $"连接到远程服务器失败，请检查服务器是否已启动并且网络连接正常。错误信息：{ex.Message}",
+                    TextWrapping = TextWrapping.Wrap
+                }
+            };
+
+            await dialog.ShowAsync();
+            Frame.Navigate(typeof(ServerPage));
+        }
     }
 
     public PublishRemoteAppPage()
@@ -75,7 +98,8 @@ public sealed partial class PublishRemoteAppPage : Page
             if (extension == ".lnk")
             {
                 var app = new RemoteApplication(WindowsCommon.GetApplicationInfoFromInk(item.Path)!);
-                Frame.Navigate(typeof(EditRemoteAppPage), app);
+                var arg = new RemoteApplicationNavigationArg(app, true);
+                Frame.Navigate(typeof(EditRemoteAppPage), arg);
             }
             else if (extension == ".exe")
             {
@@ -85,8 +109,9 @@ public sealed partial class PublishRemoteAppPage : Page
                     DisplayName = item.Name,
                     WorkingDirectory = Path.GetDirectoryName(item.Path) ?? string.Empty
                 };
+                var app = new RemoteApplication(applicationToPublish);
 
-                Frame.Navigate(typeof(EditRemoteAppPage), new RemoteApplication(applicationToPublish));
+                Frame.Navigate(typeof(EditRemoteAppPage), new RemoteApplicationNavigationArg(app, true));
             }
             else if (item.Name == "Internet Explorer")
             {
@@ -159,7 +184,8 @@ public sealed partial class PublishRemoteAppPage : Page
             WorkingDirectory = Path.GetDirectoryName(file.Path) ?? string.Empty
         };
 
-        Frame.Navigate(typeof(EditRemoteAppPage), new RemoteApplication(applicationToPublish));
+        var app = new RemoteApplication(applicationToPublish);
+        Frame.Navigate(typeof(EditRemoteAppPage), new RemoteApplicationNavigationArg(app, true));
     }
 
     private async void PublishLnkAppBtn_OnClick(object sender, RoutedEventArgs e)
@@ -177,6 +203,9 @@ public sealed partial class PublishRemoteAppPage : Page
         }
         var applicationToPublish = WindowsCommon.GetApplicationInfoFromInk(file.Path);
         if (applicationToPublish != null)
-            Frame.Navigate(typeof(EditRemoteAppPage), new RemoteApplication(applicationToPublish));
+        {
+            var app = new RemoteApplication(applicationToPublish);
+            Frame.Navigate(typeof(EditRemoteAppPage), new RemoteApplicationNavigationArg(app, true));
+        }
     }
 }

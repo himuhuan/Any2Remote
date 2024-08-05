@@ -11,7 +11,7 @@ namespace Any2Remote.Windows.AdminClient.ViewModels;
 public partial class MainViewModel : ObservableRecipient
 {
     // ReSharper disable once PrivateFieldCanBeConvertedToLocalVariable
-    private readonly IRdpService        _rdpService;
+    private readonly IRdpService _rdpService;
     private readonly INavigationService _navigationService;
 
     public MainViewModel(IRdpService service, INavigationService navigationService)
@@ -100,16 +100,23 @@ public partial class MainViewModel : ObservableRecipient
         }
     }
 
-    public void ExecuteServerAction(bool devMode)
+    public void ExecuteServerAction(bool devMode, bool clickOnce = false)
     {
         if (_info.NotSupported)
             NotSupportedHandle();
         if (_info.RunningService)
             StopServer();
-        if (_info.NotInitializeServer)
-            InitializeService();
-        if (_info.RequireEnhanceMode)
-            EnableEnhanceMode();
+        if (clickOnce)
+        {
+            ClickOnce();
+        }
+        else
+        {
+            if (_info.NotInitializeServer)
+                InitializeService();
+            if (_info.RequireEnhanceMode)
+                EnableEnhanceMode();
+        }
         if (_info.ServerOnly)
             StartTermsrv();
         if (_info.TermsrvOnly)
@@ -126,8 +133,14 @@ public partial class MainViewModel : ObservableRecipient
     private static void StartServer()
     {
         string serverRootPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Assets\Any2RemoteServer");
-        string serverRoot     = $"\"{serverRootPath}\"";
+        string serverRoot = $"\"{serverRootPath}\"";
         AdminRunnerHelper.StartRunner("server", "start", serverRoot);
+    }
+
+    private static void ClickOnce()
+    {
+        string randomPassword = Guid.NewGuid().ToString("N");
+        AdminRunnerHelper.StartRunner("server", "click-once", randomPassword);
     }
 
     private static void StopServer()
@@ -138,7 +151,7 @@ public partial class MainViewModel : ObservableRecipient
     private static void StartDevServer()
     {
         string serverRootPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Assets\Any2RemoteServer");
-        string serverRoot     = $"\"{serverRootPath}\"";
+        string serverRoot = $"\"{serverRootPath}\"";
         AdminRunnerHelper.StartRunner("server", "start-dev", serverRoot);
     }
 
@@ -162,7 +175,7 @@ public partial class MainViewModel : ObservableRecipient
     private static void StartTermsrv()
     {
         string serverRootPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Assets\Any2RemoteServer");
-        string serverRoot     = $"\"{serverRootPath}\"";
+        string serverRoot = $"\"{serverRootPath}\"";
         AdminRunnerHelper.StartRunner("server", "restart", serverRoot);
     }
 
